@@ -6,8 +6,8 @@
 
 
 ```bash
-git clone https://github.com/duduneto/safesys-api.git
-cd api
+git clone https://github.com/duduneto/safesys-front-end.git
+cd front-end
 npm install
 ```
 
@@ -16,6 +16,6 @@ npm install
 Execute `npm run dev` 
 
 ```bash
-cd api
+cd front-end
 npm start
 ```
