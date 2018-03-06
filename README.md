@@ -1,4 +1,4 @@
-<h2 align="center">SafeSys API</h2>
+<h2 align="center">SafeSys Front-End</h2>
 
 
 ## Início
