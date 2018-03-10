@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, BrowserRouter } from 'react-router-dom';
 import SideMenu from '../components/sideMenu';
 import Header from '../components/header';
 import FooterBar from '../components/footer';
@@ -22,16 +22,18 @@ class DefaultPage extends Component {
       };
 
       return (
-        <Layout style={{ height: '' }} >
-          <SideMenu />
-          <Layout>
-            <Header />
-              <Content>
-                    <Routes />
-              </Content>
-            <FooterBar />
+        
+          <Layout style={{ height: '' }} >
+            <SideMenu />
+            <Layout>
+              <Header />
+                <Content>
+                      <Routes />
+                </Content>
+              <FooterBar />
+            </Layout>
           </Layout>
-        </Layout>
+        
     
       );
     }

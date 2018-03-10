@@ -13,24 +13,12 @@ function hasErrors(fieldsError) {
   }
   
   class Login extends React.Component {
-    // componentDidMount() {
-    //   // To disabled submit button at the beginning.
-    //   this.props.form.validateFields();
-    // }
+
     
     constructor(props){
       super(props);
       this.state = { email: [], password: []};
     }
-
-    // e.preventDefault();
-    // var a = fetch('https://br.lipsum.com/', {
-    //   mode: 'no-cors', 
-    //   body: JSON.stringify()
-    //   })
-    //   .then(response => response.text())
-    //   .then(result => console.log(result));
-    //   // console.log(a);
 
     handleSubmit(e){
       

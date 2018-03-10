@@ -19,11 +19,14 @@ export default class SideMenu extends Component{
                 <div className="logo">
                     <h1 className="nav-text AlinhaOTexto Texto-logo" > LOGO </h1>
                 </div>
+                
                 <Menu theme="dark" mode="inline" defaultSelectedKeys={['1']}>
                     <Menu.Item key="1">
                         <Icon type="user" />
                         <span className="nav-text">Home</span>
+                        
                         <Link to='/home' />
+                        
                     </Menu.Item>
                     <Menu.Item key="2">
                         <Icon type="video-camera" />
@@ -32,14 +35,19 @@ export default class SideMenu extends Component{
                     <Menu.Item key="3">
                         <Icon type="solution" />
                         <span className="nav-text">Aloha</span>
+                        
                         <Link to='/aloha' />
+                        
                     </Menu.Item>
                     <Menu.Item key="4">
                         <Icon type="user" />
                         <span className="nav-text">Teste</span>
+                        
                         <Link to='/test' />
+                        
                     </Menu.Item>
                 </Menu>
+                
             </Sider>
             
         )

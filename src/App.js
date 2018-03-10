@@ -3,10 +3,11 @@ import React, { Component } from 'react';
 import LoginForm from './features/login/';
 import './App.css';
 // import { Row, Col } from 'antd';
-import { Route, BrowserRouter, Switch } from 'react-router-dom';
+import { Route, BrowserRouter, Switch, Redirect } from 'react-router-dom';
 import DefaultPage from './layouts/DefaultPage';
 // import SpaceHeader from './components/login/spaceHeader'
 import Test from './features/test';
+import LoginOrDefault from './layouts/LoginOrDefault';
 
 
 class App extends Component {
@@ -15,8 +16,13 @@ class App extends Component {
     return (
         
             <div>
-              <DefaultPage />
-
+              <BrowserRouter>
+                <div>
+                  
+                  <Route path="/" component={LoginOrDefault} />
+                  <Redirect from='*' to='/' />
+                </div>
+              </BrowserRouter>
             </div>
                 
     )
