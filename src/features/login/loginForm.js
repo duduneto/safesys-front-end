@@ -1,72 +1,107 @@
 import React from 'react';
-import { Form, Icon, Input, Button } from 'antd';
+import { Form, Input, Button } from 'antd';
 import { Card } from 'antd';
-import fetch from 'node-fetch';
-import PegaFetch from './loginfetch';
-      
+import axios from 'axios';
 
+// import PegaFetch from './loginfetch';
+
+import { reduxForm, Field } from 'redux-form';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+      
+import { login, signup } from '../auth/authActions';
 
 const FormItem = Form.Item;
-
-function hasErrors(fieldsError) {
-    return Object.keys(fieldsError).some(field => fieldsError[field]);
-  }
   
   class Login extends React.Component {
 
     
     constructor(props){
       super(props);
-      this.state = { email: [], password: []};
+      
+      this.handleOnSubmit = this.handleOnSubmit.bind(this);
+      // this.logaUsuario = this.logaUsuario.bind(this);
+
+      this.state = {
+        logado: false,
+        email: undefined,
+        password: undefined
+      }
     }
 
-    handleSubmit(e){
+
+    logaUsuario(emailuser, passworduser){
+
       
-      e.preventDefault();
-        PegaFetch();
+      axios.post('http://localhost:3030/oapi/login', {
+        email : emailuser,
+        password: passworduser,
+      })
+        .then( resp => {
+          console.log(resp.data)
+          localStorage.setItem('token', resp.data.token);
+          window.location.href="http://localhost:3000/home";
+        }).catch( err => {
+          console.log(err.headers);
+        })
+    }
+
+
+
+    handleOnSubmit(event){
+      event.preventDefault();
+      console.log("CLICADO");
+
+      
+      let emailuser = document.getElementById('userEmail').value;
+      let passworduser = document.getElementById('password').value;
+
+      this.logaUsuario(emailuser, passworduser);
+
+      console.log(emailuser,passworduser);
+      
+      return this;        
     }
 
     
 
     render() {
-      const { getFieldDecorator, getFieldsError, getFieldError, isFieldTouched } = this.props.form;
-      // Only show error after a field is touched.
-      const userNameError = isFieldTouched('userName') && getFieldError('userName');
-      const passwordError = isFieldTouched('password') && getFieldError('password');
+ 
+      const { getFieldDecorator } = this.props.form;     
+      
+      const userNameDecorator = getFieldDecorator('userEmail');
+      const passwordDecorator = getFieldDecorator('password');
+      
       return (
         <Card style={{ width: 300 }}>
-        <Form layout="inline" onSubmit={this.handleSubmit}>
-          <FormItem
-            validateStatus={userNameError ? 'error' : ''}
-            help={userNameError || ''}
-          >
-            {getFieldDecorator('userName', {
-              rules: [{ required: true, message: 'Please input your username!' }],
-            })(
-              <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Username" />
-            )}
-          </FormItem>
-          <h3>{this.state.email}</h3>
-          <FormItem
-            validateStatus={passwordError ? 'error' : ''}
-            help={passwordError || ''}
-          >
-            {getFieldDecorator('password', {
-              rules: [{ required: true, message: 'Please input your Password!' }],
-            })(
-              <Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="Password" />
-            )}
-          </FormItem>
-          <FormItem>
-            <Button
-              type="primary"
-              htmlType="submit"
-              disabled={hasErrors(getFieldsError())}
-            >
-              Log in
+          <Form id='formLogin' onSubmit={this.handleOnSubmit} >
+
+            <FormItem>
+              {userNameDecorator(
+                <Input 
+                id="userEmail"
+                type="email"
+                placeholder="Digite seu e-mail"
+                />
+              )}
+              
+            </FormItem>
+
+            <FormItem>
+              {passwordDecorator(
+                <Input
+                id="password"
+                type="password"
+                placeholder="Digite sua Senha" />
+              )}
+            </FormItem>
+
+            <Button type="primary" htmlType="submit">
+              Entrar
             </Button>
-          </FormItem>
-        </Form>
+
+          </Form>
+          <h1>{}</h1>
         </Card>
       );
     }
@@ -74,4 +109,6 @@ function hasErrors(fieldsError) {
   
   const LoginForm = Form.create()(Login);
 
-  export default LoginForm;
+  const mapStateToProps = state => ({ auth: state.auth });
+  const mapDispatchToProps = dispatch => bindActionCreators( { login }, dispatch);
+  export default connect(mapStateToProps,mapDispatchToProps)(LoginForm);

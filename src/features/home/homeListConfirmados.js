@@ -1,9 +1,9 @@
 import React, { Component } from 'react';
-import { Card, Button, Table, Icon, Divider } from 'antd';
+import { Table, Icon, Divider } from 'antd';
 import data from '../../mock/home.js';
 
 
-const { Column, ColumnGroup } = Table;
+const { Column } = Table;
 
 
 class HomeListConfirmados extends Component {

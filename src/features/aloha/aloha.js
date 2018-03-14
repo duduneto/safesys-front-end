@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Card } from 'antd';
-import axios from 'axios';
+// import axios from 'axios';
 
 export default class Aloha extends Component{
 
@@ -16,18 +16,7 @@ export default class Aloha extends Component{
                 
     // }
 
-    componentDidMount(){
-        axios.get('http://localhost:3030/api/contratos')
-                .then(response => response.data)
-                .then(item => item.map( user => {
-                    console.log("HEY")
-                    console.log(user)
-                    
-                    
-                    this.setState( { lista : user } )
-                }))
 
-    }
 
     render(){
         return(

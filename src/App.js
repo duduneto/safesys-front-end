@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 
-import LoginForm from './features/login/';
+// import LoginForm from './features/login/';
 import './App.css';
 // import { Row, Col } from 'antd';
-import { Route, BrowserRouter, Switch, Redirect } from 'react-router-dom';
-import DefaultPage from './layouts/DefaultPage';
+import { Route, BrowserRouter, Redirect } from 'react-router-dom';
+// import DefaultPage from './layouts/DefaultPage';
 // import SpaceHeader from './components/login/spaceHeader'
-import Test from './features/test';
+
 import LoginOrDefault from './layouts/LoginOrDefault';
 
 

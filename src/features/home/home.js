@@ -1,33 +1,27 @@
 import React, { Component } from 'react';
-import { Card, Button, Table, Icon, Divider } from 'antd';
-import axios from 'axios';
+
+// import axios from 'axios';
 
 import HomeListPendentes from './homeListPendentes.js';
 import HomeListConfirmados from './homeListConfirmados.js';
 
-function handleClick(){
-    // e. preventDefault();
-    console.log("Clicado");
-}
 
 
 export default class Home extends Component{
-
-   constructor(props){
-       super(props);
-
+    
+    constructor(props){
+        super(props);
+        
         this.state = { names : []}
-
+        
         this.handleClick = this.handleClick.bind(this);
-   }
+    }
+    
+    handleClick(){
+        // e. preventDefault();
+        console.log("Clicado");
+    }
 
-handleClick(){
-    axios.get('http://localhost:3030/api/contratos')
-            .then(response => response.data)
-            .then(result => result.map( valor => {
-                this.setState = { names : valor.name };
-            }));
-}
     
     
     render(){
