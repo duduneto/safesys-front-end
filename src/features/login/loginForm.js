@@ -41,7 +41,7 @@ const FormItem = Form.Item;
         .then( resp => {
           console.log(resp.data)
           localStorage.setItem('token', resp.data.token);
-          window.location.href="http://localhost:3000/home";
+          window.location.href=`${urls.HOME}`;
         }).catch( err => {
           console.log(err.headers);
         })
