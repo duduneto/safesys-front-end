@@ -3,7 +3,7 @@ import { Route, Redirect } from 'react-router-dom';
 
 import Home from '../features/home';
 import Test from '../features/test';
-import Aloha from '../features/aloha';
+import NovoContrato from '../features/novoContrato';
 
 export default props => (
 
@@ -11,7 +11,7 @@ export default props => (
     
         <Route path='/home' component={Home} />
         <Route path='/test' component={Test} />
-        <Route path='/aloha' component={Aloha} />
+        <Route path='/novoContrato' component={NovoContrato} />
         <Redirect from='*' to='/home' />
     
     </div>

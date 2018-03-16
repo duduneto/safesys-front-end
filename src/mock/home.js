@@ -1,21 +1,52 @@
-const data = [{
-    key: '1',
-    firstName: 'John',
-    lastName: 'Brown',
-    age: 32,
-    address: 'New York No. 1 Lake Park',
-  }, {
-    key: '2',
-    firstName: 'Jim',
-    lastName: 'Green',
-    age: 42,
-    address: 'London No. 1 Lake Park',
-  }, {
-    key: '3',
-    firstName: 'Joe',
-    lastName: 'Black',
-    age: 32,
-    address: 'Sidney No. 1 Lake Park',
-  }];
+import axios from 'axios';
+import urls from '../common/urls';
 
-export default data;
+export function getProcessosPendentes(){
+
+  const arrayPendentes = [];
+
+  axios.get(`${urls.API_URL}/contratos`)
+      .then( resp => {
+          // console.log(resp.data);
+          resp.data.map( processo => {
+              if(processo.confirm_processo === false){
+                  arrayPendentes.push(processo);
+              
+              }
+              
+              
+          })
+
+
+      }).catch(err => {
+          console.log(err);
+      });
+      return arrayPendentes;
+  
+}
+
+export function getProcessosConfirmados(){
+
+  const arrayConfirmados = [];
+
+  axios.get(`${urls.API_URL}/contratos`)
+      .then( resp => {
+          // console.log(resp.data);
+          resp.data.map( processo => {
+              if(processo.confirm_processo === true){
+                  arrayConfirmados.push(processo);
+              
+              }
+              
+              
+          })
+
+
+      }).catch(err => {
+          console.log(err);
+      });
+      return arrayConfirmados;
+  
+}
+
+

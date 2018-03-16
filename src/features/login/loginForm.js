@@ -2,14 +2,15 @@ import React from 'react';
 import { Form, Input, Button } from 'antd';
 import { Card } from 'antd';
 import axios from 'axios';
+import urls from '../../common/urls';
 
 // import PegaFetch from './loginfetch';
 
-import { reduxForm, Field } from 'redux-form';
+// import { reduxForm, Field } from 'redux-form';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
       
-import { login, signup } from '../auth/authActions';
+import { login } from '../auth/authActions';
 
 const FormItem = Form.Item;
   
@@ -33,7 +34,7 @@ const FormItem = Form.Item;
     logaUsuario(emailuser, passworduser){
 
       
-      axios.post('http://localhost:3030/oapi/login', {
+      axios.post(`${urls.OAPI_URL}/login`, {
         email : emailuser,
         password: passworduser,
       })

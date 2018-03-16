@@ -18,8 +18,7 @@ export default class Home extends Component{
     }
     
     handleClick(){
-        // e. preventDefault();
-        console.log("Clicado");
+        
     }
 
     

@@ -4,6 +4,7 @@ import { Layout, Menu, Icon } from 'antd';
 
 
 const { Sider } = Layout;
+const { SubMenu } = Menu;
 
 export default class SideMenu extends Component{
 
@@ -24,28 +25,28 @@ export default class SideMenu extends Component{
                     <Menu.Item key="1">
                         <Icon type="user" />
                         <span className="nav-text">Home</span>
-                        
                         <Link to='/home' />
-                        
                     </Menu.Item>
+
                     <Menu.Item key="2">
                         <Icon type="video-camera" />
                         <span className="nav-text">Options</span>
                     </Menu.Item>
-                    <Menu.Item key="3">
-                        <Icon type="solution" />
-                        <span className="nav-text">Aloha</span>
-                        
-                        <Link to='/aloha' />
-                        
-                    </Menu.Item>
+                    
+                    <SubMenu key="sub1" title={<span><Icon type="solution" />Contratos</span>}>
+                        <Menu.Item key="3">
+                            <Icon type="file-add" />
+                            <span className="nav-text">Novo Contrato</span>
+                            <Link to='/novoContrato' />
+                        </Menu.Item>
+                    </SubMenu>
+
                     <Menu.Item key="4">
                         <Icon type="user" />
                         <span className="nav-text">Teste</span>
-                        
                         <Link to='/test' />
-                        
                     </Menu.Item>
+
                 </Menu>
                 
             </Sider>

@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
-import { Table, Icon, Divider } from 'antd';
-import data from '../../mock/home.js';
+import { Table } from 'antd';
+import axios from 'axios';
+import urls from '../../common/urls';
+
+
 
 
 const { Column } = Table;
@@ -8,46 +11,60 @@ const { Column } = Table;
 
 class HomeListConfirmados extends Component {
 
+    constructor(props){
+        super(props);
+        this.state = {contratos: [] };
+    }
+
+    componentDidMount(){
+        const token = localStorage.getItem('token');
+        axios.get(`${urls.API_URL}/contratos`,{headers:{token:token}})
+            .then( resp => {
+          resp.data.map( processo => {
+                if(processo.confirm_processo === true){
+                    this.setState({
+                        contratos: [...this.state.contratos, processo]
+                    });
+                    
+                }
+            })
+            }).catch(err => {
+                console.log(err);
+            });
+        
+    }
+
     render(){
         return(
 
-            <Table dataSource={data}> 
+            <Table dataSource={this.state.contratos} scroll={{x:650}} > 
                     <Column
-                        title="First Name"
-                        dataIndex="firstName"
-                        key="firstName"
+                        title="Nome"
+                        dataIndex="nome"
+                        key="nome"
                     />
                     <Column
-                        title="Last Name"
-                        dataIndex="lastName"
-                        key="lastName"
+                        title="RG"
+                        dataIndex="rg"
+                        key="rg"
                     />
                     
                     <Column
-                    title="Age"
-                    dataIndex="age"
-                    key="age"
+                    title="CPF"
+                    dataIndex="cpf"
+                    key="cpf"
                     />
                     <Column
-                    title="Address"
-                    dataIndex="address"
-                    key="address"
+                    title="Nascimento"
+                    dataIndex="data_nasc"
+                    key="data_nasc"
                     />
                     <Column
-                    title="Action"
-                    key="action"
-                    render={(text, record) => (
-                        <span>
-                        <a href="#">Action 一 {record.name}</a>
-                        <Divider type="vertical" />
-                        <a href="#">Delete</a>
-                        <Divider type="vertical" />
-                        <a href="#" className="ant-dropdown-link">
-                            More actions <Icon type="down" />
-                        </a>
-                        </span>
-                    )}
+                    title="Sexo"
+                    dataIndex="sexo"
+                    key="sexo"
                     />
+                    
             </Table>
 
         )

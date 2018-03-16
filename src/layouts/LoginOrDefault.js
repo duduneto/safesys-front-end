@@ -44,7 +44,7 @@ class LoginOrDefault extends Component{
 
     render() {
 
-        if(this.state.logado == false){
+        if(this.state.logado === false){
             return <LoginForm />
         } else {
             return <DefaultPage />
