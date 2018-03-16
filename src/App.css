@@ -42,3 +42,10 @@
 .Texto-logo{
   margin-bottom: 50px;
 }
+
+.CadastroSuccess{
+  background-color: #91d5ff;
+}
+.CadastroFail{
+  background-color: #ffccc7;
+}

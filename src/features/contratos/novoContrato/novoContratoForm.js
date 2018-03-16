@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { Form, Icon, Input, Button, DatePicker, Radio } from 'antd';
 import axios from 'axios';
-import urls from '../../common/urls';
+import urls from '../../../common/urls';
 import { formatDate } from './helper/dateHelper'
+import { cadastroSuccess, cadastroFail } from './helper/notification';
 // import { addToken } from './helper/addToken';
 
 
@@ -37,15 +38,20 @@ class HorizontalLoginForm extends Component {
 
 
             axios.post(`${urls.API_URL}/contratos`,values)
-                .then(resp => {
-                    console.log(resp.status)
-                    if(resp.ok){
-                        console.log("Cadastro Criado");
-                    }
-                })
-                .catch( err => {
-                    console.log(err);
-                })
+            .then(resp => {
+                console.log(resp.status)
+                if(resp.status === 201){
+                    console.log("Cadastro Criado");
+                    this.props.form.resetFields();
+                    
+                    cadastroSuccess();
+                }
+            })
+            .catch( err => {
+                console.log(err);
+                cadastroFail();
+            })
+        
         
         }
       });

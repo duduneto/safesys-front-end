@@ -1,0 +1,75 @@
+import React, { Component } from 'react';
+import { Table, Card } from 'antd';
+import axios from 'axios';
+import urls from '../../../../common/urls';
+
+
+const { Column } = Table;
+
+class ListPendentes extends Component {
+
+
+    constructor(props){
+        super(props);
+        this.state = {contratos: []}
+    }
+
+    componentDidMount(){
+        const token = localStorage.getItem('token');
+        axios.get(`${urls.API_URL}/contratos`,{headers:{token:token}})
+      .then( resp => {
+          // console.log(resp.data);
+          resp.data.map( processo => {
+              if(processo.confirm_processo === false){
+                this.setState({
+                    contratos: [...this.state.contratos, processo]
+                })              
+            }
+        })
+        }).catch(err => {
+          console.log(err);
+      });
+    }
+
+    render(){
+
+        return(
+
+            <Card>
+                <Table dataSource={this.state.contratos} scroll={{x : 650}} >
+                        
+                        <Column
+                            title="Nome"
+                            dataIndex="nome"
+                            key="nome"
+                        />
+                        <Column
+                            title="RG"
+                            dataIndex="rg"
+                            key="rg"
+                        />
+                        
+                        <Column
+                        title="CPF"
+                        dataIndex="cpf"
+                        key="cpf"
+                        />
+                        <Column
+                        title="Nascimento"
+                        dataIndex="data_nasc"
+                        key="data_nasc"
+                        />
+                        <Column
+                        title="Sexo"
+                        dataIndex="sexo"
+                        key="sexo"
+                        />
+                        
+                    </Table>
+                </Card>
+        )
+    }
+
+}
+
+export default ListPendentes;
