@@ -1,54 +1,146 @@
 import React, { Component } from 'react';
-import { Table, Card } from 'antd';
+import { Table, Card, Dropdown, Button, Menu, Icon, Input, Form, Collapse, notification } from 'antd';
+import { Row, Col } from 'react-flexbox-grid';
+import axios from 'axios';
+import urls from '../../../../common/urls';
 
-function test(){
+// import Search from '../helper/search';
 
-}
 
-const columns = [{
-  title: 'Name',
-  dataIndex: 'name',
-  render: text => <a >{text}</a>,
-}, {
-  title: 'Cash Assets',
-  className: 'column-money',
-  dataIndex: 'money',
-}, {
-  title: 'Address',
-  dataIndex: 'address',
-}];
+const { Column } = Table;
+const Panel = Collapse.Panel;
+const FormItem = Form.Item;
 
-const data = [{
-  key: '1',
-  name: 'John Brown',
-  money: '￥300,000.00',
-  address: 'New York No. 1 Lake Park',
-}, {
-  key: '2',
-  name: 'Jim Green',
-  money: '￥1,256,000.00',
-  address: 'London No. 1 Lake Park',
-}, {
-  key: '3',
-  name: 'Joe Black',
-  money: '￥120,000.00',
-  address: 'Sidney No. 1 Lake Park',
-}];
 
-export default class ListConfirmados extends Component{
-  
-    render() {
+class ListConfirmados extends Component {
+
+    
+    constructor(props){
+        super(props);
+        this.state = {contratos: []}
+        this.handleSubmit = this.handleSubmit.bind(this);
+        
+    }
+
+
+    componentDidMount(){
+        const token = localStorage.getItem('token');
+        axios.get(`${urls.API_URL}/contratos`,{headers:{token:token}})
+      .then( resp => {
+          // console.log(resp.data);
+          resp.data.map( processo => {
+              if(processo.confirm_processo === false){
+                this.setState({
+                    contratos: [...this.state.contratos, processo]
+                })              
+            }
+        })
+        }).catch(err => {
+          console.log(err);
+      });
+    }
+
+    handleSubmit = (e) => {
+        const token = localStorage.getItem('token');
+        e.preventDefault();
+        const inputSearch = document.getElementById('inputSearchClient');
+        
+        console.log(typeof(inputSearch.value))
+        axios.get(`${urls.API_URL}/contratos/?nome__regex=/${inputSearch.value}/gi`,{headers:{token:token}})
+        .then(resp => {
+            if(JSON.stringify(resp.data) == '[]'){
+                
+                notification.config({
+                placement: 'bottomRight',
+                bottom: 50,
+                duration: 3,
+              });
+        
+                notification.open({
+                className:'NotificationFail',
+                message: 'Ninguém foi Encontrado',
+                duration: 2.25
+            });
+            }else{
+                console.log(resp.data);
+                resp.data.map( result => {
+                if(!inputSearch.value == ''){
+                    this.setState({contratos: [result]})
+                }else{
+                    if(result.confirm_processo === true){
+                        this.setState({contratos: [...this.state.contratos, result]})
+                    }
+                    
+                }
+            })
+            }
+            
+        })
+        .catch(err => {
+            console.log(err);
+        })
+    }
+
+    render(){
+
+        
 
         return(
+
             <Card>
-                <Table
-                    columns={columns}
-                    dataSource={data}
-                    bordered
-                    title={() => 'Header'}
-                    footer={() => 'Footer'}
-                />
-            </Card>
+                <Collapse>
+                    <Panel header="Pesquisar" showArrow={false} >
+                        <Form onSubmit={this.handleSubmit} >
+
+                            <FormItem>
+                                <Input id="inputSearchClient" type="text" placeholder="Nome do Cliente" />
+                            </FormItem>
+
+                            <FormItem>
+                                <Row>
+                                    <Col xs ><Button type="primary" htmlType="submit" >Pesquisar</Button></Col>
+                                    <Col xs ><Button type="default" >Limpar</Button></Col>
+                                    
+                                </Row>
+                            </FormItem>
+                            
+                        </Form>
+                    </Panel>
+                </Collapse>
+                <Table dataSource={this.state.contratos} scroll={{x : 650}} >
+                        
+                        <Column
+                            title="Nome"
+                            dataIndex="nome"
+                            key="nome"
+                        />
+                        <Column
+                            title="RG"
+                            dataIndex="rg"
+                            key="rg"
+                        />
+                        
+                        <Column
+                        title="CPF"
+                        dataIndex="cpf"
+                        key="cpf"
+                        />
+                        <Column
+                        title="Nascimento"
+                        dataIndex="data_nasc"
+                        key="data_nasc"
+                        />
+                        <Column
+                        title="Sexo"
+                        dataIndex="sexo"
+                        key="sexo"
+                        />
+                        
+                    </Table>
+                </Card>
         )
     }
+
 }
+
+export default ListConfirmados;

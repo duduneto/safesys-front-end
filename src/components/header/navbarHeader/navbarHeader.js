@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { logout } from '../../../features/auth/authActions';
+import urls from '../../../common/urls';
 
 import { Menu, Dropdown } from 'antd';
 import { Layout, Avatar, Badge, Button } from 'antd';
@@ -12,7 +13,7 @@ function btnClicked() {
     console.log("Quero Deslogar");
 
     localStorage.removeItem('token');
-    window.location.href="http://localhost:3000/";
+    window.location.href=`${urls.HOME}`;
 
 }
 

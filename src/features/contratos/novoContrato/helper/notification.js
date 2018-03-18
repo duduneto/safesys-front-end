@@ -8,7 +8,7 @@ export function cadastroSuccess(){
       });
 
     notification.open({
-        className:'CadastroSuccess',
+        className:'NotificationSuccess',
         message: 'Cadastro com Sucesso',
         duration: 2.25
     });
@@ -22,7 +22,7 @@ export function cadastroFail(){
       });
 
     notification.open({
-        className:'CadastroFail',
+        className:'NotificationFail',
         message: 'ERRO',
         description:'Ocorreu algum erro na Requisição',
         duration: 2.25

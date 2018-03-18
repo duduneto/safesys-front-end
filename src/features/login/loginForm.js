@@ -3,6 +3,7 @@ import { Form, Input, Button } from 'antd';
 import { Card } from 'antd';
 import axios from 'axios';
 import urls from '../../common/urls';
+import { connectionFail } from './helper/notification';
 
 // import PegaFetch from './loginfetch';
 
@@ -44,6 +45,7 @@ const FormItem = Form.Item;
           window.location.href=`${urls.HOME}`;
         }).catch( err => {
           console.log(err.headers);
+          connectionFail();
         })
     }
 
