@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
-import { Table, Card, Dropdown, Button, Menu, Icon, Input, Form, Collapse, notification } from 'antd';
+import { Table, Card, Dropdown, Button, Menu, Icon, Input, Form, Collapse, notification, Divider } from 'antd';
+import MostraModal from '../helper/modal';
 import { Row, Col } from 'react-flexbox-grid';
 import axios from 'axios';
 import urls from '../../../../common/urls';
@@ -12,16 +13,22 @@ const Panel = Collapse.Panel;
 const FormItem = Form.Item;
 
 
+function test(id) {
+    console.log(id)
+}
+
 class ListConfirmados extends Component {
 
     
     constructor(props){
         super(props);
-        this.state = {contratos: []}
-        this.handleSubmit = this.handleSubmit.bind(this);
-        
+        this.state = {contratos: [], contratosClonados: []}
+        this.procuraCliente = this.procuraCliente.bind(this);
+        this.limpaPesquisa = this.limpaPesquisa.bind(this);
+                
     }
 
+    
 
     componentDidMount(){
         const token = localStorage.getItem('token');
@@ -29,10 +36,12 @@ class ListConfirmados extends Component {
       .then( resp => {
           // console.log(resp.data);
           resp.data.map( processo => {
-              if(processo.confirm_processo === false){
+              if(processo.confirm_processo === true){
                 this.setState({
-                    contratos: [...this.state.contratos, processo]
-                })              
+                    contratos: [...this.state.contratos, processo],
+                    contratosClonados: [...this.state.contratosClonados, processo]
+                })
+                                
             }
         })
         }).catch(err => {
@@ -40,45 +49,35 @@ class ListConfirmados extends Component {
       });
     }
 
-    handleSubmit = (e) => {
-        const token = localStorage.getItem('token');
+    procuraCliente = (e) => {
         e.preventDefault();
-        const inputSearch = document.getElementById('inputSearchClient');
-        
-        console.log(typeof(inputSearch.value))
-        axios.get(`${urls.API_URL}/contratos/?nome__regex=/${inputSearch.value}/gi`,{headers:{token:token}})
-        .then(resp => {
-            if(JSON.stringify(resp.data) == '[]'){
-                
-                notification.config({
-                placement: 'bottomRight',
-                bottom: 50,
-                duration: 3,
-              });
-        
-                notification.open({
-                className:'NotificationFail',
-                message: 'Ninguém foi Encontrado',
-                duration: 2.25
-            });
-            }else{
-                console.log(resp.data);
-                resp.data.map( result => {
-                if(!inputSearch.value == ''){
-                    this.setState({contratos: [result]})
-                }else{
-                    if(result.confirm_processo === true){
-                        this.setState({contratos: [...this.state.contratos, result]})
-                    }
-                    
-                }
-            })
-            }
+        let array = [];
+        let searchInput = document.getElementById('inputSearchClient');
+        console.log(searchInput.value);
+        let expressaoRegular = new RegExp(searchInput.value, 'i');
+        if(searchInput.value.length > 0){
+            this.state.contratos.forEach(element => {
             
-        })
-        .catch(err => {
-            console.log(err);
-        })
+                if(expressaoRegular.test(element.nome)){
+                    console.log(element)
+                    array.push(element)
+                    console.log(array);
+                }
+            });
+            console.log(array)
+            this.setState({contratos: undefined})
+            this.setState({contratos: array})
+            
+        }else{
+            // this.setState({contratos: undefined})
+            this.setState({contratos: this.state.contratosClonados})
+        }
+        
+    }
+
+    limpaPesquisa(){
+        this.setState({contratos: this.state.contratosClonados});
+        document.getElementById('inputSearchClient').value = '';
     }
 
     render(){
@@ -90,7 +89,7 @@ class ListConfirmados extends Component {
             <Card>
                 <Collapse>
                     <Panel header="Pesquisar" showArrow={false} >
-                        <Form onSubmit={this.handleSubmit} >
+                        <Form onSubmit={this.procuraCliente} >
 
                             <FormItem>
                                 <Input id="inputSearchClient" type="text" placeholder="Nome do Cliente" />
@@ -99,7 +98,7 @@ class ListConfirmados extends Component {
                             <FormItem>
                                 <Row>
                                     <Col xs ><Button type="primary" htmlType="submit" >Pesquisar</Button></Col>
-                                    <Col xs ><Button type="default" >Limpar</Button></Col>
+                                    <Col xs ><Button type="default" onClick={this.limpaPesquisa} >Limpar</Button></Col>
                                     
                                 </Row>
                             </FormItem>
@@ -110,9 +109,20 @@ class ListConfirmados extends Component {
                 <Table dataSource={this.state.contratos} scroll={{x : 650}} >
                         
                         <Column
+                            title="Ação"
+                            dataIndex="action"
+                            key='action'
+                            render={(text, record) => (
+                                
+                                <MostraModal value={record} title="Ação" />
+                            )}
+                            
+                        />
+                        <Column
                             title="Nome"
                             dataIndex="nome"
-                            key="nome"
+                            key='nome'
+                            
                         />
                         <Column
                             title="RG"
@@ -136,6 +146,7 @@ class ListConfirmados extends Component {
                         key="sexo"
                         />
                         
+                    
                     </Table>
                 </Card>
         )
