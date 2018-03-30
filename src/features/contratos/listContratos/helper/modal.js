@@ -3,10 +3,13 @@ import { Modal, Button, Switch, Form } from 'antd';
 import axios from 'axios';
 import urls from '../../../../common/urls';
 
+import { removeProcesso } from './modalActions';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 
 const FormItem = Form.Item;
 
-export default class MostraModal extends Component {
+class MostraModalPendentes extends Component {
   showModal = () => {
     this.setState({
       visible: true,
@@ -26,10 +29,15 @@ export default class MostraModal extends Component {
     axios.delete(`${urls.API_URL}/contratos/${this.props.value._id}`,{headers:{token:token}})
     .then(resp => {
       console.log(resp)
+      this.props.removeProcesso()
+      
     })
     .catch(err => {
       console.log(err)
     })
+    this.setState({
+      visible: false,
+    });
   }
 
   handleOk = (e) => {
@@ -51,6 +59,7 @@ export default class MostraModal extends Component {
       <div>
         <Button type="primary" onClick={this.showModal}>{this.props.title}</Button>
         <Modal
+          id='modalExcluir'
           title="Ações"
           visible={this.state.visible}
           onOk={this.handleOk}
@@ -69,3 +78,8 @@ export default class MostraModal extends Component {
     );
   }
 }
+
+const mapStateToProps = state => ({reduxContratos: state.contratos.contratos, reduxContratosClone: state.contratos.contratosClone})
+
+const mapDispatchToProps = dispatch => bindActionCreators({removeProcesso}, dispatch)
+export default connect(mapStateToProps,mapDispatchToProps)(MostraModalPendentes)

@@ -3,6 +3,9 @@ import { Table } from 'antd';
 import axios from 'axios';
 import urls from '../../common/urls';
 
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+import { atualizaProcessoPendente } from '../contratos/listContratos/listPendentes/helper/modalActions'
 
 const { Column } = Table;
 
@@ -16,19 +19,14 @@ class HomeListPendentes extends Component {
 
     componentDidMount(){
         const token = localStorage.getItem('token');
-        axios.get(`${urls.API_URL}/contratos`,{headers:{token:token}})
-      .then( resp => {
-          // console.log(resp.data);
-          resp.data.map( processo => {
-              if(processo.confirm_processo === false){
-                this.setState({
-                    contratos: [...this.state.contratos, processo]
-                })              
-            }
+        axios.get(`${urls.API_URL}/contratos?confirm_processo=false&sort=nome`,{headers:{token:token}})
+        .then(resp => {
+            console.log(resp);
+            this.props.atualizaProcessoPendente(resp.data);
         })
-        }).catch(err => {
-          console.log(err);
-      });
+        .catch(err => {
+            console.log(err)
+        })
     }
 
     render(){
@@ -36,7 +34,7 @@ class HomeListPendentes extends Component {
         return(
 
 
-            <Table dataSource={this.state.contratos} scroll={{x : 650}} >
+            <Table dataSource={this.props.reduxContratosClone} scroll={{x : 650}} >
                     
                     <Column
                         title="Nome"
@@ -72,4 +70,6 @@ class HomeListPendentes extends Component {
 
 }
 
-export default HomeListPendentes;
+const mapStateToProps = state => ({reduxContratos: state.contratos.contratosPendentes, reduxContratosClone: state.contratos.contratosPendentesClone})
+const mapDispatchToProps = dispatch => bindActionCreators({atualizaProcessoPendente}, dispatch)
+export default connect(mapStateToProps,mapDispatchToProps)(HomeListPendentes)

@@ -1,9 +1,13 @@
 import React, { Component } from 'react';
 import { Table, Card, Dropdown, Button, Menu, Icon, Input, Form, Collapse, notification, Divider } from 'antd';
-import MostraModal from '../helper/modal';
+import MostraModalConfirmados from './helper/modal';
 import { Row, Col } from 'react-flexbox-grid';
 import axios from 'axios';
 import urls from '../../../../common/urls';
+
+import { getContratosConfirmados, filtraProcesso, limpaPesquisaProcesso } from './actions/listConfirmadosActions';
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 
 // import Search from '../helper/search';
 
@@ -30,54 +34,38 @@ class ListConfirmados extends Component {
 
     
 
-    componentDidMount(){
-        const token = localStorage.getItem('token');
-        axios.get(`${urls.API_URL}/contratos`,{headers:{token:token}})
-      .then( resp => {
-          // console.log(resp.data);
-          resp.data.map( processo => {
-              if(processo.confirm_processo === true){
-                this.setState({
-                    contratos: [...this.state.contratos, processo],
-                    contratosClonados: [...this.state.contratosClonados, processo]
-                })
-                                
-            }
-        })
-        }).catch(err => {
-          console.log(err);
-      });
-    }
+    // componentDidMount(){
+    //     this.props.getContratosConfirmados();
+    // }
 
     procuraCliente = (e) => {
         e.preventDefault();
+        // this.setState({contratos:undefined})
         let array = [];
         let searchInput = document.getElementById('inputSearchClient');
         console.log(searchInput.value);
         let expressaoRegular = new RegExp(searchInput.value, 'i');
         if(searchInput.value.length > 0){
-            this.state.contratos.forEach(element => {
+            this.props.reduxContratosClone.forEach(element => {
             
                 if(expressaoRegular.test(element.nome)){
                     console.log(element)
                     array.push(element)
-                    console.log(array);
                 }
             });
             console.log(array)
-            this.setState({contratos: undefined})
-            this.setState({contratos: array})
+            this.props.filtraProcesso(array);
+            
             
         }else{
-            // this.setState({contratos: undefined})
-            this.setState({contratos: this.state.contratosClonados})
+            this.props.limpaPesquisaProcesso(this.props.reduxContratos);
         }
         
     }
 
     limpaPesquisa(){
-        this.setState({contratos: this.state.contratosClonados});
         document.getElementById('inputSearchClient').value = '';
+        this.props.limpaPesquisaProcesso(this.props.reduxContratos);
     }
 
     render(){
@@ -106,7 +94,7 @@ class ListConfirmados extends Component {
                         </Form>
                     </Panel>
                 </Collapse>
-                <Table dataSource={this.state.contratos} scroll={{x : 650}} >
+                <Table dataSource={this.props.reduxContratosClone} scroll={{x : 650}} >
                         
                         <Column
                             title="Ação"
@@ -114,7 +102,7 @@ class ListConfirmados extends Component {
                             key='action'
                             render={(text, record) => (
                                 
-                                <MostraModal value={record} title="Ação" />
+                                <MostraModalConfirmados value={record} title="Ação" />
                             )}
                             
                         />
@@ -154,4 +142,8 @@ class ListConfirmados extends Component {
 
 }
 
-export default ListConfirmados;
+
+const mapStateToProps = state => ({reduxContratos: state.contratos.contratosConfirmados, reduxContratosClone: state.contratos.contratosConfirmadosClone})
+
+const mapDispatchToProps = dispatch => bindActionCreators({getContratosConfirmados, filtraProcesso, limpaPesquisaProcesso}, dispatch)
+export default connect(mapStateToProps,mapDispatchToProps)(ListConfirmados)

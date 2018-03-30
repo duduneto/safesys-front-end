@@ -4,11 +4,14 @@ import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
 
-import { createStore } from 'redux';
+import { applyMiddleware, createStore } from 'redux';
+import promise from 'redux-promise';
 import { Provider } from 'react-redux';
 import reducers from './common/reducers';
 
-const store = createStore(reducers)
+
+const middleware = applyMiddleware(promise)
+const store = createStore(reducers, middleware);
 
 ReactDOM.render(
     <Provider store={store} >

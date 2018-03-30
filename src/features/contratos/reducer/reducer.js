@@ -1,11 +1,21 @@
 const INITIAL_STATE = {
-    contratos: [],
-    contratosClone: []
+    contratosConfirmados: [],
+    contratosConfirmadosClone: [],
+    contratosPendentes: [],
+    contratosPendentesClone: []
 }
 
 export default function(state = INITIAL_STATE, action) {
     switch(action.type){
-        case 'GET_INITIAL_CONTRATOS': return { contratos: action.payload, contratosClone: action.payload }
+        case 'GET_INITIAL_PROCESSO_PENDENTES': return { ...state , contratosPendentes: action.payload, contratosPendentesClone: action.payload }
+        case 'FILTRA_PROCESSO_PENDENTES': return { ...state, contratosPendentesClone: action.payload }
+        case 'LIMPA_PESQUISA_PENDENTES': return { ...state, contratosPendentesClone: action.payload }
+        case 'REMOVE_PROCESSO_PENDENTES': return { ...state, contratosPendentesClone: action.payload }
+
+        case 'GET_INITIAL_PROCESSO_CONFIRMADOS': return { ...state , contratosConfirmados: action.payload, contratosConfirmadosClone: action.payload }
+        case 'FILTRA_PROCESSO_CONFIRMADOS': return { ...state, contratosConfirmadosClone: action.payload }
+        case 'LIMPA_PESQUISA_CONFIRMADOS': return { ...state, contratosConfirmadosClone: action.payload }
+        case 'REMOVE_PROCESSO_CONFIRMADOS': return { ...state, contratosConfirmadosClone: action.payload }
         default: return state;
     }
 }

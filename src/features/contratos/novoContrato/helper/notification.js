@@ -28,3 +28,18 @@ export function cadastroFail(){
         duration: 2.25
     });
 }
+
+export function processoSuccess(texto, subtexto){
+    notification.config({
+        placement: 'bottomRight',
+        bottom: 50,
+        duration: 3,
+      });
+
+    notification.open({
+        className:'ProcessoConfirmado',
+        message: texto,
+        description: subtexto,
+        duration: 2.25
+    });
+}

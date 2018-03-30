@@ -3,12 +3,13 @@ import { Table, Card, Dropdown, Button, Icon, Input, Form, Collapse, notificatio
 import { Row, Col } from 'react-flexbox-grid';
 import axios from 'axios';
 import urls from '../../../../common/urls';
-import MostraModal from '../helper/modal';
-import { getContratos } from './actions/listPendentesActions';
+import MostraModalPendentes from './helper/modal';
+import { getContratosPendentes, filtraProcesso, limpaPesquisaProcesso } from './actions/listPendentesActions';
+
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-// import Search from '../helper/search';
+
 
 
 const { Column, ColumnGroup } = Table;
@@ -21,34 +22,14 @@ class ListPendentes extends Component {
     
     constructor(props){
         super(props);
-        this.state = {contratos: [], contratosClonados: []}
-        
         this.limpaPesquisa = this.limpaPesquisa.bind(this);
-        
-        
     }
 
 
     componentDidMount(){
-        const token = localStorage.getItem('token');
-        axios.get(`${urls.API_URL}/contratos`,{headers:{token:token}})
-      .then( resp => {
-          // console.log(resp.data);
-          resp.data.map( processo => {
-              if(processo.confirm_processo === false){
-                this.setState({
-                    contratos: [...this.state.contratos, processo],
-                    contratosClonados: [...this.state.contratosClonados, processo]
-                })
-                                
-            }
-        })
-        }).catch(err => {
-          console.log(err);
-      });
+    this.props.getContratosPendentes()
     }
 
-    
     
 
     procuraCliente = (e) => {
@@ -59,28 +40,26 @@ class ListPendentes extends Component {
         console.log(searchInput.value);
         let expressaoRegular = new RegExp(searchInput.value, 'i');
         if(searchInput.value.length > 0){
-            this.state.contratos.forEach(element => {
+            this.props.reduxContratosClone.forEach(element => {
             
                 if(expressaoRegular.test(element.nome)){
                     console.log(element)
                     array.push(element)
-                    console.log(array);
                 }
             });
             console.log(array)
-            this.setState({contratos: undefined})
-            this.setState({contratos: array})
+            this.props.filtraProcesso(array);
+            
             
         }else{
-            // this.setState({contratos: undefined})
-            this.setState({contratos: this.state.contratosClonados})
+            this.props.limpaPesquisaProcesso(this.props.reduxContratos);
         }
         
     }
 
     limpaPesquisa(){
-        this.setState({contratos: this.state.contratosClonados});
         document.getElementById('inputSearchClient').value = '';
+        this.props.limpaPesquisaProcesso(this.props.reduxContratos);
     }
 
     render(){
@@ -88,8 +67,8 @@ class ListPendentes extends Component {
         
 
         return(
-        
             <Card>
+            
                 <Collapse>
                     <Panel header="Pesquisar" showArrow={false} >
                         <Form onSubmit={this.procuraCliente} >
@@ -111,15 +90,15 @@ class ListPendentes extends Component {
                         </Form>
                     </Panel>
                 </Collapse>
-                <Table dataSource={this.state.contratos} scroll={{x : 700}} >
+                <Table dataSource={this.props.reduxContratosClone} scroll={{x : 700}} >
                     
                     <Column
-                            title="Ação"
+                            title=""
                             dataIndex="action"
                             key='action'
                             render={(text, record) => (
                                 
-                                <MostraModal value={record} title="Ação" />
+                                <MostraModalPendentes value={record} title="Ação" />
                             )}
                             
                         />
@@ -158,11 +137,7 @@ class ListPendentes extends Component {
 
 }
 
-function mapStateToProps(state){
-    return{
-        reduxContratos: state.contratos
-    }
-}
-function mapDispatchToProps(dispatch){bindActionCreators({getContratos}, dispatch);
-}
+const mapStateToProps = state => ({reduxContratos: state.contratos.contratosPendentes, reduxContratosClone: state.contratos.contratosPendentesClone})
+
+const mapDispatchToProps = dispatch => bindActionCreators({getContratosPendentes, filtraProcesso, limpaPesquisaProcesso}, dispatch)
 export default connect(mapStateToProps,mapDispatchToProps)(ListPendentes)
