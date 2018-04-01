@@ -15,10 +15,9 @@ export default class ListContratos extends Component{
 
         return(
 
-            <Tabs onChange={callback} type="card"  >
-                <TabPane tab="Pendentes" key="1"><ListPendentes /></TabPane>
-                <TabPane tab="Confirmados" key="2"><ListConfirmados /></TabPane>
-            </Tabs>
+            
+                <ListPendentes />
+                
 
 
         )

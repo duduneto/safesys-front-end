@@ -15,3 +15,19 @@ export function atualizaProcessoPendente(estado){
         console.log('saiu do dispatch')
     
 }
+
+export function abreModal(){
+    console.log('abrir Modal')
+    return {
+        type: 'MODAL_VISIBLE',
+        payload: true
+    }
+}
+
+export function fechaModal(){
+    console.log('Fechar Modal')
+    return {
+        type: 'MODAL_UNVISIBLE',
+        payload: false
+    }
+}

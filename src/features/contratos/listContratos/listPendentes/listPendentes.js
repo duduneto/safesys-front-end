@@ -30,6 +30,9 @@ class ListPendentes extends Component {
     this.props.getContratosPendentes()
     }
 
+    enviaDados= (a) =>{
+        console.log(a)
+    }
     
 
     procuraCliente = (e) => {

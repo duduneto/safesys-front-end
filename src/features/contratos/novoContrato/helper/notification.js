@@ -1,5 +1,19 @@
 import { notification } from 'antd';
 
+export function editadoSuccess(){
+    notification.config({
+        placement: 'bottomRight',
+        bottom: 50,
+        duration: 3,
+      });
+
+    notification.open({
+        className:'ProcessoConfirmado',
+        message: 'Processo Editado',
+        duration: 2.25
+    });
+}
+
 export function cadastroSuccess(){
     notification.config({
         placement: 'bottomRight',
