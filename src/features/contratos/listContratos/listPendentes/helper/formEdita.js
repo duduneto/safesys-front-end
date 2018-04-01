@@ -118,7 +118,7 @@ class FormEdita extends Component {
       return (
 
         <div>
-          <h1>{this.state.cliente.natureza_processo}</h1>
+          
           <Card>
               <Form onSubmit={this.handleSubmit}>
 

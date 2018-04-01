@@ -33,6 +33,8 @@ class HorizontalLoginForm extends Component {
             const token = localStorage.getItem('token');
             console.log(values.data_nasc._d);
             const data = formatDate(values.data_nasc._d);
+            let data_sinistro = formatDate(values.data_sinistro._d)
+            values.data_sinistro = data_sinistro;
             values.data_nasc = data;
             console.log(values);
             values.token = token;

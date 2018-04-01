@@ -60,13 +60,9 @@ export default class SideMenu extends Component{
                             <Link to='/home' />
                     </Menu.Item>
 
-                    <Menu.Item key="2">
-                        <Icon type="video-camera" />
-                        <span className="nav-text">Options</span>
-                    </Menu.Item>
                     
                     <SubMenu key="sub1" title={<span><Icon type="solution" />Contratos</span>}>
-                        <Menu.Item key="3">
+                        <Menu.Item key="2">
                             <Icon type="file-add" />
                             <span className="nav-text">Novo Contrato</span>
                             <Link to='/novoContrato' />
