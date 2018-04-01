@@ -128,12 +128,12 @@ class MostraModalPendentes extends Component {
             <div>
               <h3 style={{ marginBottom: 16 }}>Informações do Processo</h3>
               <List bordered >
+                <List.Item><List.Item.Meta title={<strong>Processo:</strong>} /> {this.props.value.natureza_processo}</List.Item>
                 <List.Item  ><List.Item.Meta title={<strong>Nome:</strong>} /> {this.props.value.nome}</List.Item>
                 <List.Item><List.Item.Meta title={<strong>CPF:</strong>} /> {this.props.value.cpf}</List.Item>
                 <List.Item><List.Item.Meta title={<strong>RG:</strong>} /> {this.props.value.rg}</List.Item>
                 <List.Item><List.Item.Meta title={<strong>Data Nasc:</strong>} /> {this.props.value.data_nasc}</List.Item>
                 <List.Item><List.Item.Meta title={<strong>Sinistro:</strong>} /> {this.props.value.data_sinistro}</List.Item>
-                <List.Item><List.Item.Meta title={<strong>Processo:</strong>} /> {this.props.value.natureza_processo}</List.Item>
                 <List.Item><List.Item.Meta title={<strong>Status:</strong>} /> {this.props.value.status}</List.Item>
                 <List.Item><List.Item.Meta title={<strong>Telefone:</strong>} /> {this.props.value.tel}</List.Item>
                 <List.Item><List.Item.Meta title={<strong>Sexo:</strong>} /> {this.props.value.sexo}</List.Item>

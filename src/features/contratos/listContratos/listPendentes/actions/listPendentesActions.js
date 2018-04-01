@@ -5,7 +5,7 @@ export const getContratosPendentes = async () => {
     
         console.log("Entrou no dispatch")
         const token = localStorage.getItem('token');
-        return axios.get(`${urls.API_URL}/contratos?confirm_processo=false&sort=nome`,{headers:{token:token}})
+        return axios.get(`${urls.API_URL}/contratos?sort=nome`,{headers:{token:token}})
         .then( resp => {
             return {type: 'GET_INITIAL_PROCESSO_PENDENTES', payload: resp.data }        
         })
