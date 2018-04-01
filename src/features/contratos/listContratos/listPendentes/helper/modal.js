@@ -143,11 +143,11 @@ class MostraModalPendentes extends Component {
             <FormItem>
               <Row between='xs' >
                 <Col xs={2} >
-                    {/* <Button type='danger' key="back" onClick={this.handleExcluir}>Excluir</Button> */}
-                    <Link to={{pathname:`/editaProcesso/${this.props.value._id}`, state:{dados:this.props.value.nome} }} ><Button type='default' >Edita</Button></Link>
+                    <Button type='danger' key="back" onClick={this.handleExcluir}>Excluir</Button>
                     
                 </Col>
                 <Col>
+                    <Link to={{pathname:`/editaProcesso/${this.props.value._id}`, state:{dados:this.props.value.nome} }} ><Button type='default' >Edita</Button></Link>
                     {/* <Button id='buttonConfirma' type='primary' onClick={this.confirmarProcesso}>Confirmar</Button> */}
                 </Col>
               </Row>
