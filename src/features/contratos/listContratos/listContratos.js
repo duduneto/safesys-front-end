@@ -15,9 +15,9 @@ export default class ListContratos extends Component{
 
         return(
 
-            
+            <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
                 <ListPendentes />
-                
+            </div>
 
 
         )

@@ -34,13 +34,15 @@
 }
 
 .logo {
-  height: 32px;
-  background: rgba(255, 255, 255, 0.2);
-  margin: 16px;
+  height: 3em;
+  background: rgb(255, 255, 255);
+  margin: 1em;
+  font: arial;
 }
 
 .Texto-logo{
-  margin-bottom: 50px;
+  margin-bottom: 100px;
+  color: rgb(1, 16, 80);
 }
 
 .NotificationSuccess{

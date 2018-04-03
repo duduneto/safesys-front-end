@@ -15,13 +15,13 @@ class NovoContrato extends Component{
         
 
         return(
-
+            
             <Row>
                 <Col sm />
                 <Col xs={10} >
-                    <Card>
+                    <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
                         <NovoContratoForm />
-                    </Card>
+                    </div>
                 </Col>
                 <Col sm />
             </Row>

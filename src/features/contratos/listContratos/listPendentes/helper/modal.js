@@ -147,7 +147,7 @@ class MostraModalPendentes extends Component {
                     
                 </Col>
                 <Col>
-                    <Link to={{pathname:`/editaProcesso/${this.props.value._id}`, state:{dados:this.props.value.nome} }} ><Button type='default' >Edita</Button></Link>
+                    <Link to={{pathname:`/editaProcesso/${this.props.value._id}`, state:{dados:this.props.value.nome} }} ><Button type='default' >Editar</Button></Link>
                     {/* <Button id='buttonConfirma' type='primary' onClick={this.confirmarProcesso}>Confirmar</Button> */}
                 </Col>
               </Row>

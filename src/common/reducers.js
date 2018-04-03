@@ -3,10 +3,12 @@ import { combineReducers } from 'redux';
 
 import AuthReducer from '../features/auth/authReducer';
 import Contratos from '../features/contratos/reducer/reducer'
+import SideMenu from '../components/reducers/sideMenu/reducer'
 
 const rootReducer = combineReducers({
     // auth: AuthReducer,
-    contratos: Contratos
+    contratos: Contratos,
+    sideMenu: SideMenu 
 });
 
 export default rootReducer;

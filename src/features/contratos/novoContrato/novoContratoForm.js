@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, Icon, Input, Button, DatePicker, Radio, Select } from 'antd';
+import { Form, Icon, Input, Button, DatePicker, Radio, Select, Card } from 'antd';
 import axios from 'axios';
 import urls from '../../../common/urls';
 import { formatDate } from './helper/dateHelper'
@@ -80,7 +80,8 @@ class HorizontalLoginForm extends Component {
 
 
       return (
-
+          <div>
+        <Card>
         <Form onSubmit={this.handleSubmit}>
 
 
@@ -216,6 +217,8 @@ class HorizontalLoginForm extends Component {
 
 
         </Form>
+        </Card>
+        </div>
       );
     }
   }

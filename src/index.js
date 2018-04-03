@@ -13,7 +13,10 @@ import reducers from './common/reducers';
 const middleware = applyMiddleware(promise)
 const store = createStore(reducers, middleware);
 
+
+
 ReactDOM.render(
+    
     <Provider store={store} >
         <App />
     </Provider >

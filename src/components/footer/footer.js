@@ -9,7 +9,7 @@ export default class FooterBar extends Component{
         return (
             <Layout>
                 <Footer style={{ textAlign: 'center' }}>
-                    Ant Design ©2016 Created by Ant UED
+                    SafeSys version: α-1.0.1
                 </Footer>
             </Layout>
         )
