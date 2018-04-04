@@ -13,9 +13,7 @@ import LoginOrDefault from './layouts/LoginOrDefault';
 
 class App extends Component {
 
-componentDidMount(){
-  console.log('COmponente Carregado')
-}
+
 
   render() {
     return (

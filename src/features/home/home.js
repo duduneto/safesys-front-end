@@ -29,8 +29,8 @@ export default class Home extends Component{
             <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
                 <h3 className="AlinhaOTexto" >Pendentes</h3>
                 <HomeListPendentes />
-                <h3 className="AlinhaOTexto" >Confirmados</h3>
-                <HomeListConfirmados />
+                {/* <h3 className="AlinhaOTexto" >Confirmados</h3> */}
+                {/* <HomeListConfirmados /> */}
             </div>
         )
 
