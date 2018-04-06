@@ -40,7 +40,7 @@ class HomeListPendentes extends Component {
     constructor(props){
         super(props);
         this.state = { count: null }
-        this.contador = this.contador.bind(this);
+        // this.contador = this.contador.bind(this);
     }
 
     componentDidMount(){
@@ -58,35 +58,37 @@ class HomeListPendentes extends Component {
        
     }
 
-    contador(){
-
-        let countSobAnalise = 0;
-            this.props.reduxContratosClone.forEach(element => {
-                if(element.status == 'Processo Sob Analise'){
-                    
-                    let resultado =  countSobAnalise + 1;
-                    countSobAnalise = resultado;
-                    
-                }
-            });
-        console.log(countSobAnalise)
-        return countSobAnalise;
-        // this.setState({count :  countSobAnalise})
-        
-
-    }
+    
 
     render(){
         
         
-       this.contador();
+    //    this.contador();
         return(
 
 
             
                 
                 <div>
-                    <Row>
+
+                    <List
+                        grid={{ gutter: 16, xs: 1, sm: 2}}
+                        
+                    
+                    >
+                        
+                        
+                        <List.Item >
+                        <Card1 />
+                            
+                        </List.Item>
+                        
+                        <List.Item>
+                            <Card2/>
+                        </List.Item>
+                    </List>
+                        
+                    {/* <Row>
                         <Col xs >
                             
                                 <Card1/>
@@ -96,7 +98,7 @@ class HomeListPendentes extends Component {
                         </Col>
                         
                     </Row>
-                        <Card2 />
+                        <Card2 /> */}
                     
                 
                 </div>

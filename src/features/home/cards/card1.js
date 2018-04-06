@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import { Card } from 'antd';
+import { Card, Table } from 'antd';
 import { Row, Col } from 'react-flexbox-grid'
-// import { contadorSobAnalise, contadorEnviadoSeguradora, contadorRetornouSeguradora, contadorComRestricoes, contadorIndenizado, contadorNegadoCancelado } from './helper/contadores'
+// import { setCountSobAnalise } from './helper/contadores'
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -13,108 +13,138 @@ class Card1 extends Component{
     constructor(props){
         super(props);
         this.contadorSobAnalise = this.contadorSobAnalise.bind(this);
-        this.contadorEnviadoSeguradora = this.contadorSobAnalise.bind(this);
+        this.contadorEnviadoSeguradora = this.contadorEnviadoSeguradora.bind(this);
         this.contadorRetornouSeguradora = this.contadorRetornouSeguradora.bind(this);
         this.contadorComRestricoes = this.contadorComRestricoes.bind(this);
         this.contadorIndenizado = this.contadorIndenizado.bind(this);
         this.contadorNegadoCancelado = this.contadorNegadoCancelado.bind(this);
+        
+
+        this.state={
+            data:[{status: 'Sob Analise', total: 5}]
+            
+        }
     }
 
     contadorSobAnalise(){
-        let countSobAnalise = 0;
+        let counter = 0;
         this.props.reduxContratosClone.forEach(element => {
             if(element.status == 'Processo Sob Analise'){
                 
-                let resultado =  countSobAnalise + 1;
-                countSobAnalise = resultado;
+                let resultado =  counter + 1;
+                counter = resultado;
                 
             }
         });
-        console.log(countSobAnalise)
-        return countSobAnalise;
+        console.log(counter)
+        // console.log(this.state.data)
+        return counter;
     }
 
     contadorEnviadoSeguradora(){
-        let countSobAnalise = 0;
-        this.props.reduxContratosClone.forEach(element => {
+        let counter = 0;
+        this.props.reduxContratos.forEach(element => {
             if(element.status == 'Processo Enviado p/ Seguradora'){
                 
-                let resultado =  countSobAnalise + 1;
-                countSobAnalise = resultado;
+                let resultado =  counter + 1;
+                counter = resultado;
                 
             }
         });
-        console.log(countSobAnalise)
-        return countSobAnalise;
+        console.log(counter)
+        return counter;
     }
 
     contadorRetornouSeguradora(){
-        let countSobAnalise = 0;
+        let counter = 0;
         this.props.reduxContratosClone.forEach(element => {
             if(element.status == 'Processo Retornou p/ Seguradora'){
                 
-                let resultado =  countSobAnalise + 1;
-                countSobAnalise = resultado;
+                let resultado =  counter + 1;
+                counter = resultado;
                 
             }
         });
-        console.log(countSobAnalise)
-        return countSobAnalise;
+        console.log(counter)
+        return counter;
     }
     
     contadorComRestricoes(){
-        let countSobAnalise = 0;
+        let counter = 0;
         this.props.reduxContratosClone.forEach(element => {
             if(element.status == 'Processo com Restrições'){
                 
-                let resultado =  countSobAnalise + 1;
-                countSobAnalise = resultado;
+                let resultado =  counter + 1;
+                counter = resultado;
                 
             }
         });
-        console.log(countSobAnalise)
-        return countSobAnalise;
+        console.log(counter)
+        return counter;
     }
     
     contadorIndenizado(){
-        let countSobAnalise = 0;
+        let counter = 0;
         this.props.reduxContratosClone.forEach(element => {
             if(element.status == 'Processo Indenizado'){
                 
-                let resultado =  countSobAnalise + 1;
-                countSobAnalise = resultado;
+                let resultado =  counter + 1;
+                counter = resultado;
                 
             }
         });
-        console.log(countSobAnalise)
-        return countSobAnalise;
+        console.log(counter)
+        return counter;
     }
     
     contadorNegadoCancelado(){
-        let countSobAnalise = 0;
+        let counter = 0;
         this.props.reduxContratosClone.forEach(element => {
             if(element.status == 'Processo Negado/Cancelado'){
                 
-                let resultado =  countSobAnalise + 1;
-                countSobAnalise = resultado;
+                let resultado =  counter + 1;
+                counter = resultado;
                 
             }
         });
-        console.log(countSobAnalise)
-        return countSobAnalise;
+        console.log(counter)
+        return counter;
     }
     
 
+    
+      
+      
     render() {
-        console.log(this.props.reduxContratosClone)
+        
+        const data =[
+            {status: 'Sob Analise', total:this.contadorSobAnalise()},
+            {status: 'Enviado p/ Seguradora' ,total: this.contadorEnviadoSeguradora() },
+            {status: 'Retornou da Seguradora' ,total: this.contadorRetornouSeguradora() },
+            {status: 'Com Restrições' ,total: this.contadorComRestricoes() },
+            {status: 'Indenizado' ,total: this.contadorIndenizado() },
+            {status: 'Negado/Cancelado' ,total: this.contadorNegadoCancelado() }
+        ]
+        
+          const columns = [{
+            title: 'Status',
+            dataIndex: 'status',
+            key: 'status'
+          }, {
+            title: 'Total',
+            dataIndex: 'total',
+            key: 'toal',
+          }]
+
+          console.log(this.state.countA)
         return(
-            <div>
-                 
-                    <Row>
-                        <Col><strong className='itemCard1' >Sob Análise :</strong></Col><Col></Col><Col><strong className='resultadoItemCard1' > {this.contadorSobAnalise()} </strong></Col>
+            <div className='card' >
+                
+                    {/* <Row>
+                        <Col><strong className='itemCard1' >Sob Análise:</strong></Col><Col></Col><Col><strong className='resultadoItemCard1' > {this.contadorSobAnalise()} </strong></Col>
                     </Row>
                     <Row>
-                        <Col><strong className='itemCard1' >Enviado p/ Seguradora</strong></Col><Col></Col><Col><strong className='resultadoItemCard1' > {this.contadorEnviadoSeguradora()} </strong></Col>
+                        <Col><strong className='itemCard1' >Enviado p/ Seguradora:</strong></Col><Col></Col><Col><strong className='resultadoItemCard1' > {this.contadorEnviadoSeguradora()} </strong></Col>
                     </Row>
                     <Row>
                         <Col><strong className='itemCard1' >Retornou da Seguradora : </strong></Col><Col></Col><Col><strong className='resultadoItemCard1' > {this.contadorRetornouSeguradora()} </strong></Col>
@@ -130,12 +160,15 @@ class Card1 extends Component{
                     </Row>
                     <Row>
                         <Col><strong className='itemCard1' >Total: </strong></Col><Col></Col><Col><strong className='resultadoItemCard6' > {this.props.reduxContratosClone.length} </strong></Col>
-                    </Row>
+                    </Row> */}
+
+                    <Table scroll={{x : 250}} columns={columns} dataSource={data} pagination={false} />
 
                     
                     
                                 
-                
+            
+            
             </div>
         )
     }

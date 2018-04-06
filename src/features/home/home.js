@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 
+
 // import axios from 'axios';
 
 import HomeListPendentes from './homeListPendentes.js';
@@ -14,21 +15,23 @@ export default class Home extends Component{
         
         this.state = { names : []}
         
-        this.handleClick = this.handleClick.bind(this);
+        // this.tamanhoTela = this.tamanhoTela.bind(this);
     }
     
-    handleClick(){
-        
-    }
+    // tamanhoTela(){
+    //     return window.screen.height;
+    // }
 
     
     
     render(){
 
         return(
-            <div style={{ padding: 24, background: '#fff', minHeight: 360 }}>
-                <h3 className="AlinhaOTexto" >Pendentes</h3>
+            <div style={{ padding: 24 ,background: '#fff', minHeight:890 }} >
+                <h2 className="AlinhaOTexto" style={{paddingBottom: 15}} >Dados Gerais</h2>
+                
                 <HomeListPendentes />
+                
                 {/* <h3 className="AlinhaOTexto" >Confirmados</h3> */}
                 {/* <HomeListConfirmados /> */}
             </div>

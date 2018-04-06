@@ -21,6 +21,8 @@ export default function(state = INITIAL_STATE, action) {
 
         case 'MODAL_VISIBLE': return {modalVisible: action.payload}
         case 'MODAL_UNVISIBLE': return {modalVisible: action.payload}
+
+        
         default: return state;
     }
 }

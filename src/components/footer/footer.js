@@ -9,7 +9,7 @@ export default class FooterBar extends Component{
         return (
             <Layout>
                 <Footer style={{ textAlign: 'center' }}>
-                    SafeSys version: α-1.0.1
+                    SafeSys version: α-1.0.3
                 </Footer>
             </Layout>
         )
