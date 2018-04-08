@@ -1,6 +1,7 @@
 import React from 'react';
 import { Form, Input, Button } from 'antd';
 import { Card } from 'antd';
+import { Row, Col } from 'react-flexbox-grid'
 import axios from 'axios';
 import urls from '../../common/urls';
 import { connectionFail } from './helper/notification';
@@ -76,36 +77,46 @@ const FormItem = Form.Item;
       const passwordDecorator = getFieldDecorator('password');
       
       return (
-        <Card style={{ width: 300 }}>
-          <Form id='formLogin' onSubmit={this.handleOnSubmit} >
 
-            <FormItem>
-              {userNameDecorator(
-                <Input 
-                id="userEmail"
-                type="email"
-                placeholder="Digite seu e-mail"
-                />
-              )}
-              
-            </FormItem>
+        <Row>
+          <Col xs />
+          <Col xs >
+            <div className='position-login' >
+              <Card style={{ width: 300 }}>
+                <Form id='formLogin' onSubmit={this.handleOnSubmit} >
 
-            <FormItem>
-              {passwordDecorator(
-                <Input
-                id="password"
-                type="password"
-                placeholder="Digite sua Senha" />
-              )}
-            </FormItem>
+                  <FormItem>
+                    {userNameDecorator(
+                      <Input
+                        id="userEmail"
+                        type="email"
+                        placeholder="Digite seu e-mail"
+                      />
+                    )}
 
-            <Button type="primary" htmlType="submit">
-              Entrar
+                  </FormItem>
+
+                  <FormItem>
+                    {passwordDecorator(
+                      <Input
+                        id="password"
+                        type="password"
+                        placeholder="Digite sua Senha" />
+                    )}
+                  </FormItem>
+
+                  <Button type="primary" htmlType="submit">
+                    Entrar
             </Button>
 
-          </Form>
-          <h1>{}</h1>
-        </Card>
+                </Form>
+                <h1>{}</h1>
+              </Card>
+            </div>
+          </Col>
+          <Col xs />
+        </Row>
+        
       );
     }
   }
