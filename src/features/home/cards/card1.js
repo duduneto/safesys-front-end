@@ -12,18 +12,43 @@ class Card1 extends Component{
 
     constructor(props){
         super(props);
+        this.contadorSobAnaliseCorretor = this.contadorSobAnaliseCorretor.bind(this);
         this.contadorSobAnalise = this.contadorSobAnalise.bind(this);
         this.contadorEnviadoSeguradora = this.contadorEnviadoSeguradora.bind(this);
         this.contadorRetornouSeguradora = this.contadorRetornouSeguradora.bind(this);
         this.contadorComRestricoes = this.contadorComRestricoes.bind(this);
         this.contadorIndenizado = this.contadorIndenizado.bind(this);
-        this.contadorNegadoCancelado = this.contadorNegadoCancelado.bind(this);
+        this.contadorNegado = this.contadorNegado.bind(this);
+        this.contadorEstornouPgto = this.contadorEstornouPgto.bind(this);
+        this.contadorCancelado = this.contadorCancelado.bind(this);
+        this.contadorReaberto = this.contadorReaberto.bind(this);
+        this.contadorReanalise = this.contadorReanalise.bind(this);
+        this.contadorSuspenso = this.contadorSuspenso.bind(this);
+        this.contadorTransferido = this.contadorTransferido.bind(this);
+        this.contadorDevolvido = this.contadorDevolvido.bind(this);
+        this.contadorEmitidoPgto = this.contadorIndenizado.bind(this);
+        
         
 
         this.state={
             data:[{status: 'Sob Analise', total: 5}]
             
         }
+    }
+
+    contadorSobAnaliseCorretor(){
+        let counter = 0;
+        this.props.reduxContratosClone.forEach(element => {
+            if(element.status == 'Processo Sob Analise Corretor'){
+                
+                let resultado =  counter + 1;
+                counter = resultado;
+                
+            }
+        });
+        
+        // console.log(this.state.data)
+        return counter;
     }
 
     contadorSobAnalise(){
@@ -36,7 +61,7 @@ class Card1 extends Component{
                 
             }
         });
-        console.log(counter)
+        
         // console.log(this.state.data)
         return counter;
     }
@@ -51,7 +76,7 @@ class Card1 extends Component{
                 
             }
         });
-        console.log(counter)
+        
         return counter;
     }
 
@@ -65,7 +90,7 @@ class Card1 extends Component{
                 
             }
         });
-        console.log(counter)
+        
         return counter;
     }
     
@@ -79,7 +104,7 @@ class Card1 extends Component{
                 
             }
         });
-        console.log(counter)
+        
         return counter;
     }
     
@@ -93,37 +118,149 @@ class Card1 extends Component{
                 
             }
         });
-        console.log(counter)
+        
         return counter;
     }
     
-    contadorNegadoCancelado(){
+    contadorNegado(){
         let counter = 0;
         this.props.reduxContratosClone.forEach(element => {
-            if(element.status == 'Processo Negado/Cancelado'){
+            if(element.status == 'Processo Negado'){
                 
                 let resultado =  counter + 1;
                 counter = resultado;
                 
             }
         });
-        console.log(counter)
+        
         return counter;
     }
-    
 
+    contadorEstornouPgto(){
+        let counter = 0;
+        this.props.reduxContratosClone.forEach(element => {
+            if(element.status == 'Processo Estornou Pgto'){
+                
+                let resultado =  counter + 1;
+                counter = resultado;
+                
+            }
+        });
+        
+        return counter;
+    }
+    contadorCancelado(){
+        let counter = 0;
+        this.props.reduxContratosClone.forEach(element => {
+            if(element.status == 'Processo Cancelado'){
+                
+                let resultado =  counter + 1;
+                counter = resultado;
+                
+            }
+        });
+        
+        return counter;
+    }
+    contadorReaberto(){
+        let counter = 0;
+        this.props.reduxContratosClone.forEach(element => {
+            if(element.status == 'Processo Reaberto'){
+                
+                let resultado =  counter + 1;
+                counter = resultado;
+                
+            }
+        });
+        
+        return counter;
+    }
+    contadorReanalise(){
+        let counter = 0;
+        this.props.reduxContratosClone.forEach(element => {
+            if(element.status == 'Reanalise Mantida'){
+                
+                let resultado =  counter + 1;
+                counter = resultado;
+                
+            }
+        });
+        
+        return counter;
+    }
+    contadorSuspenso(){
+        let counter = 0;
+        this.props.reduxContratosClone.forEach(element => {
+            if(element.status == 'Processo Suspenso'){
+                
+                let resultado =  counter + 1;
+                counter = resultado;
+                
+            }
+        });
+        
+        return counter;
+    }
+    contadorTransferido(){
+        let counter = 0;
+        this.props.reduxContratosClone.forEach(element => {
+            if(element.status == 'Processo Transferido'){
+                
+                let resultado =  counter + 1;
+                counter = resultado;
+                
+            }
+        });
+        
+        return counter;
+    }
+    contadorDevolvido(){
+        let counter = 0;
+        this.props.reduxContratosClone.forEach(element => {
+            if(element.status == 'Processo Devolvido'){
+                
+                let resultado =  counter + 1;
+                counter = resultado;
+                
+            }
+        });
+        
+        return counter;
+    }
+    contadorEmitidoPgto(){
+        let counter = 0;
+        this.props.reduxContratosClone.forEach(element => {
+            if(element.status == 'Processo Emitido Pgto'){
+                
+                let resultado =  counter + 1;
+                counter = resultado;
+                
+            }
+        });
+        
+        return counter;
+    }
     
       
       
     render() {
         
         const data =[
+            {status: 'Analise Corretor' ,total: this.contadorSobAnaliseCorretor() },
             {status: 'Sob Analise', total:this.contadorSobAnalise()},
             {status: 'Enviado p/ Seguradora' ,total: this.contadorEnviadoSeguradora() },
             {status: 'Retornou da Seguradora' ,total: this.contadorRetornouSeguradora() },
             {status: 'Com Restrições' ,total: this.contadorComRestricoes() },
             {status: 'Indenizado' ,total: this.contadorIndenizado() },
-            {status: 'Negado/Cancelado' ,total: this.contadorNegadoCancelado() }
+            {status: 'Negado' ,total: this.contadorNegado() },
+            {status: 'Estornou Pgto' ,total: this.contadorEstornouPgto() },
+            {status: 'Cancelado' ,total: this.contadorCancelado() },
+            {status: 'Reaberto' ,total: this.contadorReaberto() },
+            {status: 'Reanalise Mantida' ,total: this.contadorReanalise() },
+            {status: 'Suspenso' ,total: this.contadorSuspenso() },
+            {status: 'Transferido' ,total: this.contadorTransferido() },
+            {status: 'Devolvido' ,total: this.contadorDevolvido() },
+            {status: 'Emitido Pgto' ,total: this.contadorEmitidoPgto() }
         ]
         
           const columns = [{
@@ -140,27 +277,6 @@ class Card1 extends Component{
         return(
             <div className='card' >
                 
-                    {/* <Row>
-                        <Col><strong className='itemCard1' >Sob Análise:</strong></Col><Col></Col><Col><strong className='resultadoItemCard1' > {this.contadorSobAnalise()} </strong></Col>
-                    </Row>
-                    <Row>
-                        <Col><strong className='itemCard1' >Enviado p/ Seguradora:</strong></Col><Col></Col><Col><strong className='resultadoItemCard1' > {this.contadorEnviadoSeguradora()} </strong></Col>
-                    </Row>
-                    <Row>
-                        <Col><strong className='itemCard1' >Retornou da Seguradora : </strong></Col><Col></Col><Col><strong className='resultadoItemCard1' > {this.contadorRetornouSeguradora()} </strong></Col>
-                    </Row>
-                    <Row>
-                        <Col><strong className='itemCard1' >Com Restrições : </strong></Col><Col></Col><Col><strong className='resultadoItemCard1' > {this.contadorComRestricoes()} </strong></Col>
-                    </Row>
-                    <Row>
-                        <Col><strong className='itemCard1' >Indenizado : </strong></Col><Col></Col><Col><strong className='resultadoItemCard1' > {this.contadorIndenizado()} </strong></Col>
-                    </Row>
-                    <Row>
-                        <Col><strong className='itemCard1' >Negado/Cancelado : </strong></Col><Col></Col><Col><strong className='resultadoItemCard1' > {this.contadorNegadoCancelado()} </strong></Col>
-                    </Row>
-                    <Row>
-                        <Col><strong className='itemCard1' >Total: </strong></Col><Col></Col><Col><strong className='resultadoItemCard6' > {this.props.reduxContratosClone.length} </strong></Col>
-                    </Row> */}
 
                     <Table scroll={{x : 250}} columns={columns} dataSource={data} pagination={false} />
 

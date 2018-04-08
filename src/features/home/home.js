@@ -1,19 +1,21 @@
 import React, { Component } from 'react';
 
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
 
-// import axios from 'axios';
+import axios from 'axios';
+import urls from '../../common/urls';
 
 import HomeListPendentes from './homeListPendentes.js';
 import HomeListConfirmados from './homeListConfirmados.js';
 
-
-
-export default class Home extends Component{
+import { atualizaProcessoPendente } from '../contratos/listContratos/listPendentes/helper/modalActions'
+class Home extends Component{
     
     constructor(props){
         super(props);
         
-        this.state = { names : []}
+        this.state = { names : [] }
         
         // this.tamanhoTela = this.tamanhoTela.bind(this);
     }
@@ -23,6 +25,18 @@ export default class Home extends Component{
     // }
 
     
+    componentDidMount(){
+        const token = localStorage.getItem('token');
+        axios.get(`${urls.API_URL}/contratos?confirm_processo=false&sort=nome`,{headers:{token:token}})
+        .then(resp => {
+            console.log(resp);
+            
+            this.props.atualizaProcessoPendente(resp.data);
+        })
+        .catch(err => {
+            console.log(err)
+        })
+    }
     
     render(){
 
@@ -40,3 +54,8 @@ export default class Home extends Component{
     }
 
 }
+
+
+  const mapStateToProps = state => ({reduxContratos: state.contratos.contratosPendentes, reduxContratosClone: state.contratos.contratosPendentesClone})
+  const mapDispatchToProps = dispatch => bindActionCreators({atualizaProcessoPendente}, dispatch)
+  export default connect(mapStateToProps,mapDispatchToProps)(Home)

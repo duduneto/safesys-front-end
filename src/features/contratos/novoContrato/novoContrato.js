@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Card } from 'antd';
 import { Row, Col } from 'react-flexbox-grid';
-import NovoContratoForm from './novoContratoForm'
+import NovoContratoSteps from './novoContratoSteps'
 
 
 
@@ -20,7 +20,7 @@ class NovoContrato extends Component{
                 <Col sm />
                 <Col xs={10} >
                     <div style={{ padding: 24, background: '#fff', minHeight: 360, minWidth: 290}}>
-                        <NovoContratoForm />
+                        <NovoContratoSteps />
                     </div>
                 </Col>
                 <Col sm />

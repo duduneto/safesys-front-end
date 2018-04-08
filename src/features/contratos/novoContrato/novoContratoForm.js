@@ -6,10 +6,16 @@ import { formatDate } from './helper/dateHelper'
 import { cadastroSuccess, cadastroFail } from './helper/notification';
 // import { addToken } from './helper/addToken';
 
+import { setDadosCadastro } from './actions/actionNovoContrato';
+import { atualizaCurrent } from './actions/stepsActions'
+
+import { bindActionCreators } from 'redux';
+import { connect } from 'react-redux';
+
 
 const FormItem = Form.Item;
 const RadioGroup = Radio.Group;
-const Option = Select.Option
+const Option = Select.Option;
 
 function hasErrors(fieldsError) {
   return Object.keys(fieldsError).some(field => fieldsError[field]);
@@ -18,10 +24,19 @@ function hasErrors(fieldsError) {
 
 class HorizontalLoginForm extends Component {
 
+    handleChange = (e) => {
+        if( e == 'Morte'){
+            console.log('Morte Escolhida')
+        }
+    }
 
-    componentDidMount() {
-      // To disabled submit button at the beginning.
-      this.props.form.validateFields();
+    next() {
+        const current = this.props.numberPage + 1;
+        this.props.atualizaCurrent(current)
+    }
+    prev() {
+        const current = this.props.numberPage - 1;
+        this.props.atualizaCurrent(current);
     }
 
 
@@ -37,30 +52,38 @@ class HorizontalLoginForm extends Component {
             values.data_sinistro = data_sinistro;
             values.data_nasc = data;
             console.log(values);
-            values.token = token;
-            console.log(values);
+            // values.token = token;
+            // console.log(values);
 
-
-            axios.post(`${urls.API_URL}/contratos`,values)
-            .then(resp => {
-                console.log(resp.status)
-                if(resp.status === 201){
-                    console.log("Cadastro Criado");
-                    this.props.form.resetFields();
+            this.next();
+                        
+            this.props.setDadosCadastro(values)
+            
+            // axios.post(`${urls.API_URL}/contratos`,values)
+            // .then(resp => {
+            //     console.log(resp.status)
+            //     if(resp.status === 201){
+            //         console.log("Cadastro Criado");
+            //         this.props.form.resetFields();
                     
-                    cadastroSuccess();
-                }
-            })
-            .catch( err => {
-                console.log(err);
-                cadastroFail();
-            })
+            //         cadastroSuccess();
+            //     }
+            // })
+            // .catch( err => {
+            //     console.log(err);
+            //     cadastroFail();
+            // })
         
         
         }
       });
     }
 
+    componentDidMount() {
+        // To disabled submit button at the beginning.
+        
+        
+      }
 
     render() {
 
@@ -80,24 +103,10 @@ class HorizontalLoginForm extends Component {
 
 
       return (
-          <div>
-        <Card>
+          <div className='espacamento' >
+        
         <Form onSubmit={this.handleSubmit}>
 
-
-            <FormItem
-                label="Natureza do Processo"
-                >
-                {getFieldDecorator('natureza_processo', {
-                    rules: [{ required: true, message: 'Escolha a Natureza do Processo' }],
-                })(
-                    <Select style={{ width: 120 }}>
-                        <Option value="D.A.M.S">D.A.M.S</Option>
-                        <Option value="Invalidez">Invalidez</Option>
-                        <Option value="Morte">Morte</Option>
-                    </Select>
-                )}
-            </FormItem>
 
         
             <FormItem
@@ -178,12 +187,21 @@ class HorizontalLoginForm extends Component {
                     ],
                 })(
                     <Select placeholder="Selecione O Status" >
+                        <Option value="Processo Sob Analise Corretor" >Processo Sob Análise Corretor</Option>
                         <Option value="Processo Sob Analise" >Processo Sob Análise</Option>
                         <Option value="Processo Enviado p/ Seguradora">Processo Enviado p/ Seguradora</Option>
                         <Option value="Processo Retornou p/ Seguradora">Processo Retornou p/ Seguradora</Option>
                         <Option value="Processo com Restrições">Processo com Restrições</Option>
                         <Option value="Processo Indenizado">Processo Indenizado</Option>
-                        <Option value="Processo Negado/Cancelado">Processo Negado/Cancelado</Option>
+                        <Option value="Processo Negado">Processo Negado</Option>
+                        <Option value="Processo Estornou Pgto">Processo Estornou Pgto</Option>
+                        <Option value="Processo Cancelado">Processo Cancelado</Option>
+                        <Option value="Processo Reaberto">Processo Reaberto</Option>
+                        <Option value="Reanalise Mantida">Reanalise Mantida</Option>
+                        <Option value="Processo Suspenso">Processo Suspenso</Option>
+                        <Option value="Processo Transferido">Processo Transferido</Option>
+                        <Option value="Processo Devolvido">Processo Devolvido</Option>
+                        <Option value="Processo Emitido Pgto">Processo Emitido Pgto</Option>
                     </Select>
                 )}
             </FormItem>
@@ -209,15 +227,20 @@ class HorizontalLoginForm extends Component {
                 type="primary"
                 htmlType="submit"
                 disabled={hasErrors(getFieldsError())}
+                
                 >
-                Cadastrar
+                Próximo
                 </Button>
+                
+                <Button
+                onClick={() => this.prev()}
+                >Voltar</Button>
 
             </FormItem>
 
 
         </Form>
-        </Card>
+        
         </div>
       );
     }
@@ -225,4 +248,12 @@ class HorizontalLoginForm extends Component {
 
   const WrappedHorizontalLoginForm = Form.create()(HorizontalLoginForm);
   
-  export default WrappedHorizontalLoginForm;
+
+  const mapStateToProps = state => ({
+    dadosCadastro: state.contratos.dadosCadastroProcesso,
+    numberPage: state.step.numberPage
+  })
+  
+  const mapDispatchToProps = dispatch => bindActionCreators({setDadosCadastro, atualizaCurrent}, dispatch)
+  export default connect(mapStateToProps,mapDispatchToProps)(WrappedHorizontalLoginForm)
+ 

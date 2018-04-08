@@ -11,7 +11,7 @@ import reducers from './common/reducers';
 
 
 const middleware = applyMiddleware(promise)
-const store = createStore(reducers, middleware);
+const store = createStore(reducers, middleware, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
 
 
 

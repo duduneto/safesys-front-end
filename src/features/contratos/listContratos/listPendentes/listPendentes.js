@@ -29,7 +29,7 @@ class ListPendentes extends Component {
 
 
     componentDidMount(){
-    this.props.getContratosPendentes()
+    // this.props.getContratosPendentes()
     }
 
     enviaDados= (a) =>{

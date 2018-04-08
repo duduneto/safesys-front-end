@@ -27,10 +27,10 @@ class Card2 extends Component{
                 
             }
         });
-        console.log(counter)
+        
         
         let percent = (counter/this.props.reduxContratosClone.length);
-        console.log(typeof(percent))
+        
         return (percent*100).toFixed(2);
     }
 
@@ -44,7 +44,7 @@ class Card2 extends Component{
                 
             }
         });
-        console.log(counter)
+        
         let percent = (counter/this.props.reduxContratosClone.length);
         return (percent*100).toFixed(2);
     }
@@ -59,7 +59,7 @@ class Card2 extends Component{
                 
             }
         });
-        console.log(counter)
+        
         let percent = (counter/this.props.reduxContratosClone.length);
         return (percent*100).toFixed(2);
     }
@@ -74,7 +74,7 @@ class Card2 extends Component{
                 
             }
         });
-        console.log(counter)
+        
         let percent = (counter/this.props.reduxContratosClone.length);
         return (percent*100).toFixed(2);
     }
@@ -89,7 +89,7 @@ class Card2 extends Component{
                 
             }
         });
-        console.log(counter)
+        
         let percent = (counter/this.props.reduxContratosClone.length);
         return (percent*100).toFixed(2);
     }
@@ -104,7 +104,7 @@ class Card2 extends Component{
                 
             }
         });
-        console.log(counter)
+        
         let percent = (counter/this.props.reduxContratosClone.length);
         return (percent*100).toFixed(2);
     }
