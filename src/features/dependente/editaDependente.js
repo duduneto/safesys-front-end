@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import { Form, Icon, Input, Button, DatePicker, Radio, Select, List, Collapse, Card, Modal } from 'antd';
 import { Row, Col } from 'react-flexbox-grid';
-import HeaderPanel from './headerPanel';
+import HeaderPanel from '../contratos/listContratos/listPendentes/helper/headerPanel';
 import axios from 'axios';
-import urls from '../../../../../common/urls';
-import { formatDate } from '../../../novoContrato/helper/dateHelper'
-import { editadoSuccess, cadastroFail } from '../../../novoContrato/helper/notification';
+import urls from '../../common/urls';
+import { formatDate } from '../contratos/novoContrato/helper/dateHelper'
+import { editadoSuccess, cadastroFail } from '../contratos/novoContrato/helper/notification';
 import { withRouter } from 'react-router-dom';
 // import ModalExcluir from './modalExcluir';
 
@@ -26,11 +26,11 @@ function hasErrors(fieldsError) {
   return Object.keys(fieldsError).some(field => fieldsError[field]);
 }
 
-class FormEdita extends Component {
+class FormEditaDependente extends Component {
 
     constructor(props){
         super(props);
-    // this.formEdita = this.formEdita.bind(this);
+    // this.formEditaDependente = this.formEditaDependente.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleExcluir = this.handleExcluir.bind(this);
     
@@ -40,19 +40,13 @@ class FormEdita extends Component {
     this.state= { cliente: []};
     }
 
-    // formEdita =(a)=>{
+    // formEditaDependente =(a)=>{
     //     console.log(a)
     // }
     
 
     componentDidMount(){
-      let cliente = localStorage.getItem('dadosCliente');
-      let clienteObj = JSON.parse(cliente)
-      console.log(clienteObj);
-      this.setState({cliente: clienteObj});
-
-      this.props.form.validateFields();
-      
+            
       
     }
 
@@ -95,11 +89,7 @@ class FormEdita extends Component {
                     const data_nasc = formatDate(values.data_nasc._d)
                     values.data_nasc = data_nasc;
                     
-                } if(propsName[index] == 'data_sinistro'){
-                    const data_sinistro = formatDate(values.data_sinistro._d)
-                    values.data_sinistro = data_sinistro;
-                    
-                }
+                } 
                 
             }
             
@@ -112,16 +102,16 @@ class FormEdita extends Component {
             //   console.log(values);
             console.log(this.props.dados._id);
   
-              axios.put(`${urls.API_URL}/contratos/${this.props.dados._id}`, values )
+              axios.put(`${urls.API_URL}/dependentes/${this.props.dados._id}`, values )
               .then(resp => {
                   console.log(resp.status)
                   if(resp.status === 200){
                       console.log("Cadastro Criado");
                       this.props.form.resetFields();
                       
-                      localStorage.setItem('idEditado',true)
+                      
                       editadoSuccess();
-                    this.props.history.push('/contratos')
+                    this.props.history.push('/cliente')
                   }
               })
               .catch( err => {
@@ -143,9 +133,9 @@ class FormEdita extends Component {
               cancelText: 'Não',
               onOk() {
                 const token = localStorage.getItem('token');
-                axios.delete(`${urls.API_URL}/contratos/${id}`,{headers:{token:token}})
+                axios.delete(`${urls.API_URL}/dependentes/${id}`,{headers:{token:token}})
                     .then(resp => {
-                        history.push('/contratos')
+                        history.push('/cliente')
                     })
                     .catch( err => {
                         console.log(err)
@@ -174,16 +164,19 @@ class FormEdita extends Component {
         };
         const sexoError = isFieldTouched('sexo') && getFieldError('sexo');
 
+        
+    
       return (
 
         <div>
-          {/* <Button type='default' onClick >Voltar</Button> */}
+          {/* <Button type='default' >Voltar</Button>
+          <Button type='default' >Add Dependente</Button> */}
           <Card>
               <h2 className='AlinhaOTexto' >Editar Informações do Processo</h2>
               <Form onSubmit={this.handleSubmit}>
 
                 <Collapse bordered={false} defaultActiveKey={['0']} >
-                <Panel header={<HeaderPanel title='Processo:' content={this.props.dados.natureza_processo} />}  >
+                {/* <Panel header={<HeaderPanel title='Processo:' content={this.props.dados.natureza_processo} />}  >
                     <FormItem
                         label="Natureza do Processo"
                         >
@@ -196,7 +189,7 @@ class FormEdita extends Component {
                         )}
                         
                     </FormItem>
-                </Panel>
+                </Panel> */}
                 
                 <Panel header={<HeaderPanel title='Nome:' content={this.props.dados.nome} />} >
                     <FormItem
@@ -253,7 +246,7 @@ class FormEdita extends Component {
                     </FormItem>
                 </Panel>
 
-                <Panel header={<HeaderPanel title='Sinistro:' content={this.props.dados.data_sinistro} />} >
+                {/* <Panel header={<HeaderPanel title='Sinistro:' content={this.props.dados.data_sinistro} />} >
                     <FormItem
                         label="Data do Sinistro"
                         >
@@ -261,9 +254,9 @@ class FormEdita extends Component {
                             <DatePicker format="DD-MM-YYYY" />
                         )}
                     </FormItem>
-                </Panel>
+                </Panel> */}
 
-                <Panel header={<HeaderPanel title='Status:' content={this.props.dados.status} />} >
+                {/* <Panel header={<HeaderPanel title='Status:' content={this.props.dados.status} />} >
                     <FormItem
                         label="Status"
                         hasFeedback
@@ -279,8 +272,27 @@ class FormEdita extends Component {
                             </Select>
                         )}
                     </FormItem>
-                </Panel>
+                </Panel> */}
 
+
+                <Panel header={<HeaderPanel title='Tipo de Dependente:' content={this.props.dados.tipo_dependente} />} >
+                    <FormItem
+
+                        label="Tipo de Dependente"
+                        hasFeedback
+                        >
+                        {getFieldDecorator('tipo_dependente')(
+                            <Select placeholder="Selecione uma Opção" >
+                                <Option value="Companheiro(a)" >Companheiro(a)</Option>
+                                <Option value="Conjuge" >Cônjuge</Option>
+                                <Option value="Filho(a)">Filho(a)</Option>
+                                <Option value="Genitor(a)">Genitor(a)</Option>
+                                
+                            </Select>
+                        )}
+                    </FormItem>
+                </Panel>
+                
                 <Panel header={<HeaderPanel title='Sexo:' content={this.props.dados.sexo} />} >
                     <FormItem
                         label="Sexo"
@@ -293,6 +305,7 @@ class FormEdita extends Component {
                         )}
                     </FormItem>
                 </Panel>
+
                 </Collapse>
 
 
@@ -328,14 +341,13 @@ class FormEdita extends Component {
   }
   
 
-  const WrappedFormEdita = Form.create()(FormEdita);
-  const WrappedFormEditaWithRouter = withRouter(WrappedFormEdita)
+  const WrappedFormEditaDependente = Form.create()(FormEditaDependente);
+  const WrappedFormEditaDependenteWithRouter = withRouter(WrappedFormEditaDependente)
   
   const mapStateToProps = state => ({
-    dados: state.dadosPerfilCliente.dadosPerfilCliente
+    
+    dados: state.dadosPerfilDependente.dadosPerfilDependenteEditar
 })
   
   const mapDispatchToProps = dispatch => bindActionCreators({}, dispatch)
-  export default connect(mapStateToProps,mapDispatchToProps)(WrappedFormEditaWithRouter)
-
-  
+  export default connect(mapStateToProps,mapDispatchToProps)(WrappedFormEditaDependenteWithRouter)

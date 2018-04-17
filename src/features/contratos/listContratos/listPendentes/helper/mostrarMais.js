@@ -2,20 +2,23 @@ import React,{ Component } from 'react';
 import { Modal, Button, Switch, Form, Icon, List, Collapse } from 'antd';
 import { Row, Col } from 'react-flexbox-grid'
 import { Link } from 'react-router-dom';
+import { withRouter } from 'react-router-dom'
 import { processoSuccess } from '../../../novoContrato/helper/notification'
-import ModalEdita from './modalEdita';
+// import ModalEdita from './modalEdita';
+import HeaderPanel from './headerPanel';
 import axios from 'axios';
 import urls from '../../../../../common/urls';
 
 import { atualizaProcessoPendente, abreModal, fechaModal } from './modalActions';
 import { atualizaProcessoConfirmado } from '../../listConfirmados/helper/modalActions'
+import { setDadosClientePerfil } from '../../../../cliente/actions/action'
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 const FormItem = Form.Item;
 const Panel = Collapse.Panel;
 
-class MostraModalPendentes extends Component {
+class BotaoMostrarMais extends Component {
   showModal = () => {
     this.setState({visible:true})
   }
@@ -23,6 +26,7 @@ class MostraModalPendentes extends Component {
     super(props);
     this.handleExcluir = this.handleExcluir.bind(this);
     this.confirmarProcesso = this.confirmarProcesso.bind(this);
+    this.handleEditar = this.handleEditar.bind(this);
     this.teste = this.teste.bind(this);
     this.state = { visible: false, checado: undefined };
   }
@@ -48,6 +52,13 @@ class MostraModalPendentes extends Component {
     this.setState({
       visible: false,
     });
+  }
+
+  handleEditar(e){
+    e.preventDefault();
+    console.log(this.props.value)
+    this.props.setDadosClientePerfil(this.props.value)
+    this.props.history.push('/cliente')
   }
 
   confirmarProcesso = () => {
@@ -111,58 +122,21 @@ class MostraModalPendentes extends Component {
   
   render() {
     localStorage.setItem('dadosCliente', JSON.stringify(this.props.value))
+    this.props.setDadosClientePerfil(this.props.value)
     return (
       <div>
-        <a><Icon type="ellipsis" style={{fontSize: 25}} onClick={this.showModal}></Icon></a>
-        <Modal
-          id='modalExcluir'
-          title="Opções"
-          visible={this.state.visible}
-          // onOk={this.handleOk}
-          onCancel={this.handleCancel}  
-          footer={<Button onClick={this.handleOk} type='primary' >OK</Button>}       
-         >
-          <Form onSubmit={this.handleExcluir} >
-
-          <FormItem>
-            <div>
-              <h3 style={{ marginBottom: 16 }}>Informações do Processo</h3>
-              <List bordered >
-                <List.Item><List.Item.Meta title={<strong>Processo:</strong>} /> {this.props.value.natureza_processo}</List.Item>
-                <List.Item  ><List.Item.Meta title={<strong>Nome:</strong>} /> {this.props.value.nome}</List.Item>
-                <List.Item><List.Item.Meta title={<strong>CPF:</strong>} /> {this.props.value.cpf}</List.Item>
-                <List.Item><List.Item.Meta title={<strong>RG:</strong>} /> {this.props.value.rg}</List.Item>
-                <List.Item><List.Item.Meta title={<strong>Data Nasc:</strong>} /> {this.props.value.data_nasc}</List.Item>
-                <List.Item><List.Item.Meta title={<strong>Sinistro:</strong>} /> {this.props.value.data_sinistro}</List.Item>
-                <List.Item><List.Item.Meta title={<strong>Status:</strong>} /> {this.props.value.status}</List.Item>
-                <List.Item><List.Item.Meta title={<strong>Telefone:</strong>} /> {this.props.value.tel}</List.Item>
-                <List.Item><List.Item.Meta title={<strong>Sexo:</strong>} /> {this.props.value.sexo}</List.Item>
-              </List>
-            </div>
-          </FormItem>
-            <FormItem>
-              <Row between='xs' >
-                <Col xs={2} >
-                    <Button type='danger' key="back" onClick={this.handleExcluir}>Excluir</Button>
-                    
-                </Col>
-                <Col>
-                    <Link to={{pathname:`/editaProcesso/${this.props.value._id}`, state:{dados:this.props.value.nome} }} ><Button type='default' >Editar</Button></Link>
-                    {/* <Button id='buttonConfirma' type='primary' onClick={this.confirmarProcesso}>Confirmar</Button> */}
-                </Col>
-              </Row>
-            </FormItem>
-          </Form>
-        </Modal>
+        <Button type='default' onClick={this.handleEditar} >Mais</Button>
+        
       </div>
     );
   }
 }
+const BotaoMostrarMaisWithRouter = withRouter(BotaoMostrarMais)
 
 const mapStateToProps = state => ({reduxContratos: state.contratos.contratos,
   reduxContratosClone: state.contratos.contratosClone,
   modalVisible: state.contratos.modalVisible
 })
 
-const mapDispatchToProps = dispatch => bindActionCreators({atualizaProcessoPendente,atualizaProcessoConfirmado, abreModal, fechaModal}, dispatch)
-export default connect(mapStateToProps,mapDispatchToProps)(MostraModalPendentes)
+const mapDispatchToProps = dispatch => bindActionCreators({atualizaProcessoPendente,atualizaProcessoConfirmado, abreModal, fechaModal, setDadosClientePerfil}, dispatch)
+export default connect(mapStateToProps,mapDispatchToProps)(BotaoMostrarMaisWithRouter)

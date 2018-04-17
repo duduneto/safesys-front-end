@@ -53,6 +53,9 @@ class NovoContratoSteps extends Component{
         let contrato = this.props.dadosNovoContrato
         contrato.token = token;
         contrato.natureza_processo = this.props.naturezaProcesso;
+
+        let dependentes = this.props.dependentes
+        contrato.numero_de_dependente = dependentes.length;
         
         axios.post(`${urls.API_URL}/contratos`,contrato)
             .then(resp => {
@@ -66,7 +69,6 @@ class NovoContratoSteps extends Component{
                 console.log(err);
                 message.error('Cadastro Falhou')
             });
-        let dependentes = this.props.dependentes
         dependentes.forEach(element => {
             axios.post(`${urls.API_URL}/dependentes`, element)
             .then( resp => {

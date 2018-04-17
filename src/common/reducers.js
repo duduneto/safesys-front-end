@@ -9,6 +9,8 @@ import NovoContrato from '../features/contratos/novoContrato/reducers/novoContra
 import NaturezaProcesso from '../features/contratos/novoContrato/reducers/firstStepReducer';
 import ModalDependente from '../features/contratos/novoContrato/reducers/modalDependenteReducer';
 import DadosDependente from '../features/contratos/novoContrato/reducers/dadosDependentes';
+import DadosPerfilCliente from '../features/cliente/reducers/reducer'
+import DadosPerfilDependente from '../features/dependente/reducers/reducer'
 
 const rootReducer = combineReducers({
     contratos: Contratos,
@@ -17,7 +19,9 @@ const rootReducer = combineReducers({
     dadosNovoContrato: NovoContrato,
     naturezaProcesso: NaturezaProcesso,
     modalDependente: ModalDependente,
-    dadosDependente: DadosDependente
+    dadosDependente: DadosDependente,
+    dadosPerfilCliente: DadosPerfilCliente,
+    dadosPerfilDependente: DadosPerfilDependente
 });
 
 export default rootReducer;

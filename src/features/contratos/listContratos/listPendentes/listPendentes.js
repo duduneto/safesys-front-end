@@ -3,8 +3,9 @@ import { Table, Card, Dropdown, Button, Icon, Input, Form, Collapse, notificatio
 import { Row, Col } from 'react-flexbox-grid';
 import axios from 'axios';
 import urls from '../../../../common/urls';
-import MostraModalPendentes from './helper/modal';
+import MostrarMais from './helper/mostrarMais';
 import { getContratosPendentes, filtraProcesso, limpaPesquisaProcesso } from './actions/listPendentesActions';
+import { atualizaProcessoPendente } from '../../../contratos/listContratos/listPendentes/helper/modalActions'
 
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -16,6 +17,7 @@ const { Column, ColumnGroup } = Table;
 const Panel = Collapse.Panel;
 const FormItem = Form.Item;
 const Option = Select.Option;
+const Search = Input.Search;
 
 class ListPendentes extends Component {
 
@@ -23,19 +25,35 @@ class ListPendentes extends Component {
     constructor(props){
         super(props);
         this.limpaPesquisa = this.limpaPesquisa.bind(this);
+        this.pesquisaCPF = this.pesquisaCPF.bind(this);
         this.handleChange = this.handleChange.bind(this);
-        this.state={ pesquisaJaFeita: false }
+        this.state={ pesquisarPor: undefined, disableNome: true, disableCPF: true }
     }
 
 
     componentDidMount(){
-    // this.props.getContratosPendentes()
+
+        const token = localStorage.getItem('token');
+        axios.get(`${urls.API_URL}/contratos?confirm_processo=false&sort=nome`,{headers:{token:token}})
+        .then(resp => {
+            console.log(resp);
+            
+            this.props.atualizaProcessoPendente(resp.data);
+        })
+        .catch(err => {
+            console.log(err)
+        })
+        
     }
 
     enviaDados= (a) =>{
         console.log(a)
     }
     
+    pesquisaCPF = () => {
+        let cpf = document.getElementById('inputSearchCPF');
+
+    }
 
     procuraCliente = (e) => {
         let arrayClone = this.props.reduxContratos
@@ -64,27 +82,34 @@ class ListPendentes extends Component {
     }
 
     limpaPesquisa(){
-        document.getElementById('inputSearchClient').value = '';
+        document.getElementById('inputPesquisarCPF').value = '';
+        document.getElementById('inputPesquisarNome').value = '';
+        
         this.props.limpaPesquisaProcesso(this.props.reduxContratos);
         
     }
 
     handleChange(value){
-           let arrayClone = this.props.reduxContratos
-            console.log(`selected ${value}`);
-            let array = [];
+        //    let arrayClone = this.props.reduxContratos
+        //     console.log(`selected ${value}`);
+        //     let array = [];
        
-            if( value != 'todos'){
+        //     if( value != 'todos'){
             
-                arrayClone.forEach(element => {
-                    if(element.status === value){
-                        console.log(element)
-                        array.push(element);
-                    }
-                    console.log(element.status)
-                });
-                this.props.filtraProcesso(array);
-            }
+        //         arrayClone.forEach(element => {
+        //             if(element.status === value){
+        //                 console.log(element)
+        //                 array.push(element);
+        //             }
+        //             console.log(element.status)
+        //         });
+        //         this.props.filtraProcesso(array);
+        //     }
+        if(value == 'Nome'){
+            this.setState({disableNome: false, disableCPF: true});
+        } if(value == 'CPF'){
+            this.setState({disableCPF: false, disableNome: true});
+        }
     }
 
     render(){
@@ -96,20 +121,24 @@ class ListPendentes extends Component {
             
                 <Collapse>
                     <Panel header="Pesquisar" showArrow={false} >
-                        <Form onSubmit={this.procuraCliente} >
+                        <Select
+                                id='pesquisarPor'
+                                 style={{ width: 200 }}
+                                placeholder="Pesquisar Por"
+                                onChange={this.handleChange}
+                            >
+                                <Option value="Nome">Nome</Option>
+                                <Option value="CPF">CPF</Option>
+                            </Select>
+                        {/* <Form onSubmit={this.procuraCliente} >
                             <Form.Item
                             label='Status do Processo'
                             >
                             <Select
                                 id='selectFilter'
-                                showSearch
-                                style={{ width: 200 }}
+                                 style={{ width: 200 }}
                                 placeholder="Todos Status"
-                                optionFilterProp="children"
                                 onChange={this.handleChange}
-                                // onFocus={handleFocus}
-                                // onBlur={handleBlur}
-                                filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
                             >
                                 <Option value="todos">Todos</Option>
                                 <Option value="Processo Sob Analise">Processo Sob Analise</Option>
@@ -125,7 +154,6 @@ class ListPendentes extends Component {
                                 <Input id="inputSearchClient" type="text" placeholder="Nome do Cliente" />
                             </FormItem>
 
-
                             <FormItem>
                                 <Row>
                                     <Col xs ><Button type="primary" htmlType="submit" >Pesquisar</Button></Col>
@@ -136,7 +164,59 @@ class ListPendentes extends Component {
                                 
                             </FormItem>
                             
-                        </Form>
+                            
+                        </Form> */}
+
+                        <Search
+                        id='inputPesquisarNome'
+                        disabled={this.state.disableNome}
+                        placeholder="Nome do Cliente"
+                        onSearch={value => {
+                            let arrayClone = this.props.reduxContratos
+                            
+                            // this.setState({contratos:undefined})
+                            let array = [];
+                            let expressaoRegular = new RegExp(value, 'i');
+                            if(value.length > 0){
+                                arrayClone.forEach(element => {
+                                
+                                    if(expressaoRegular.test(element.nome)){
+                                        console.log(element)
+                                        array.push(element)
+                                    }
+                                });
+                                console.log(array)
+                                this.props.filtraProcesso(array);
+                                
+                                
+                            }else{
+                                this.props.limpaPesquisaProcesso(this.props.reduxContratos);
+                            }
+                        }
+                        }
+                        enterButton
+                        />
+
+                        <Search
+                        id='inputPesquisarCPF'
+                        disabled={this.state.disableCPF}
+                        placeholder="Digite o CPF"
+                        onSearch={value => {
+                            let arrayClone = this.props.reduxContratos
+                            let array = [];
+                            let expressaoRegular = new RegExp(value);
+                            arrayClone.forEach( element => {
+                                if(expressaoRegular.test(element.cpf)){
+                                    
+                                    array.push(element)
+                                }
+                            })
+                            this.props.filtraProcesso(array);
+                        }
+                        }
+                        enterButton
+                        />
+                        <Button type='default' onClick={this.limpaPesquisa} >Restaurar</Button>
                     </Panel>
                 </Collapse>
                 <Table dataSource={this.props.reduxContratosClone} scroll={{x : 750}} >
@@ -147,7 +227,7 @@ class ListPendentes extends Component {
                             key='action'
                             render={(text, record) => (
                                 
-                                <MostraModalPendentes value={record} title="Ação" />
+                                <MostrarMais value={record} />
                             )}
                             
                         />
@@ -188,5 +268,5 @@ class ListPendentes extends Component {
 
 const mapStateToProps = state => ({reduxContratos: state.contratos.contratosPendentes, reduxContratosClone: state.contratos.contratosPendentesClone})
 
-const mapDispatchToProps = dispatch => bindActionCreators({getContratosPendentes, filtraProcesso, limpaPesquisaProcesso}, dispatch)
+const mapDispatchToProps = dispatch => bindActionCreators({getContratosPendentes, filtraProcesso, limpaPesquisaProcesso, atualizaProcessoPendente}, dispatch)
 export default connect(mapStateToProps,mapDispatchToProps)(ListPendentes)

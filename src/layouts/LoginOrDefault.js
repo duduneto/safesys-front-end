@@ -19,16 +19,21 @@ class LoginOrDefault extends Component{
     }
 
     validateToken(token){
-        if(token) {
+        
             axios.post(`${urls.OAPI_URL}/validateToken`, { token })
                 .then(resp => {
-                    console.log('Token Validado')
-                    this.setState({logado : true})
+                    if(resp.data.valid === true){
+                        console.log('Token Validado')
+                        console.log(resp.data.valid)
+                        this.setState({logado : true})
+                    }else{
+                        console.log("Token não validado");
+                        localStorage.removeItem('token');
+                        this.setState({logado: false})
+                    }
                 })
                 .catch(err => console.log(err));
-        }else{
-            console.log("Token não validado");
-        }
+        
     }
 
     componentWillMount() {

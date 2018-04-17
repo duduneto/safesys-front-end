@@ -26,7 +26,7 @@ class Card1 extends Component{
         this.contadorSuspenso = this.contadorSuspenso.bind(this);
         this.contadorTransferido = this.contadorTransferido.bind(this);
         this.contadorDevolvido = this.contadorDevolvido.bind(this);
-        this.contadorEmitidoPgto = this.contadorIndenizado.bind(this);
+        this.contadorEmitidoPgto = this.contadorEmitidoPgto.bind(this);
         
         
 

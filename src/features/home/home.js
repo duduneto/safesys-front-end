@@ -27,7 +27,7 @@ class Home extends Component{
     
     componentDidMount(){
         const token = localStorage.getItem('token');
-        axios.get(`${urls.API_URL}/contratos?confirm_processo=false&sort=nome`,{headers:{token:token}})
+        axios.get(`${urls.API_URL}/contratos?sort=nome`,{headers:{token:token}})
         .then(resp => {
             console.log(resp);
             

@@ -90,3 +90,18 @@
 .position-login{
   padding-top: 10em; 
 }
+.content{
+  background-color: white
+}
+.perfil-cliente{
+  padding-left: 2em;
+  padding-right: 2em;
+}
+.btnDependente{
+  background-color: #76f041;
+  color: white;
+}
+.btnDelete{
+  background-color: tomato;
+  color: white;
+}

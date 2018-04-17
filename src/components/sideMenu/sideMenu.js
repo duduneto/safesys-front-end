@@ -109,7 +109,7 @@ class SideMenu extends Component{
                     <Menu.Item key="4">
                         <Icon type="user" />
                         <span className="nav-text">Teste</span>
-                        <Link to='/test' />
+                        <Link to='/cliente' />
                     </Menu.Item>
 
                 </Menu>

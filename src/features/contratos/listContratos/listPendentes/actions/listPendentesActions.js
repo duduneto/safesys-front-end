@@ -18,6 +18,7 @@ export const getContratosPendentes = async () => {
         
 }
 
+
 export const filtraProcesso = (array) => {
     return {
         type: 'FILTRA_PROCESSO_PENDENTES',
