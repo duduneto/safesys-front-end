@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { Form, Icon, Input, Button, DatePicker, Radio, Select, Card, Switch, Checkbox, message } from 'antd';
+import { Form, Icon, Input, Button, DatePicker, Radio, Select, Card, Switch, Checkbox, message, Modal } from 'antd';
 import axios from 'axios';
 import urls from '../../common/urls';
 import { formatDate } from '../contratos/novoContrato/helper/dateHelper'
@@ -15,6 +15,7 @@ import { withRouter } from 'react-router-dom';
 const FormItem = Form.Item;
 const RadioGroup = Radio.Group;
 const Option = Select.Option;
+const confirm = Modal.confirm;
 
 function hasErrors(fieldsError) {
   return Object.keys(fieldsError).some(field => fieldsError[field]);
@@ -25,16 +26,38 @@ class CreateUser extends Component {
 
     constructor(props){
         super(props);
-        this.state = { disableCheckBoxAdm: true, adm: false}
+        this.state = { disableCheckBoxAdm: true, adm: '0', visible: false}
         this.onChange = this.onChange.bind(this);
         this.onChecked = this.onChecked.bind(this);
+        
     }
+
+    showModal = () => {
+        this.setState({
+          visible: true,
+        });
+    
+    }
+    handleOk = () => {
+        
+        this.setState({
+            visible: false,
+        });
+
+        this.handleSubmit();
+      }
+      handleCancel = (e) => {
+        console.log(e);
+        this.setState({
+          visible: false,
+        });
+      }
 
     onChange(checked){
         console.log(`switch to ${checked}`);
         this.setState({disableCheckBoxAdm:!this.state.disableCheckBoxAdm})
         if( checked === false ){
-            this.setState({adm:false})
+            this.setState({adm: false})
         }
     }
 
@@ -43,33 +66,34 @@ class CreateUser extends Component {
     }
 
     handleSubmit = (history) => {
-      
+      let admEmail = localStorage.getItem('emailUser');
       this.props.form.validateFields((err, values) => {
         if (!err) {
             
             const data = formatDate(values.data_nasc._d);
             values.data_nasc = data;
-            values.adm = this.state.adm;
+            values.admEmail = admEmail;
+            values.admPassword = document.getElementById('passwordAdm').value;
             
-            // values.token = token;
-            console.log(values.adm);
+            if(this.state.adm === true){
+                values.adm = '1'
+            } else { values.adm = '0' }
+
+            console.log(values.adm, typeof(values.adm))
+            
             console.log(values)
             axios.post(`${urls.OAPI_URL}/signup`, values)
             .then(resp => {
                 console.log(resp)
-                // this.props.form.resetFields();
+                this.props.form.resetFields();
                 message.success('Usuário Criado com Sucesso')
-                // history.push('/home')
+                this.props.history.push('/home')
             })
             .catch(err =>{
                 console.log(err)
                 message.error('Algo deu errado')
                 console.log('Deu Errado')
             })
-            
-            
-        
-        
         }
       });
     }
@@ -152,7 +176,7 @@ class CreateUser extends Component {
                     validateStatus={emailError ? 'error' : ''}
                     help={emailError || ''}>
 
-                    {getFieldDecorator('email', {
+                    {getFieldDecorator('emailNew', {
                         rules: [{ required: true, message: 'Digite o email' }],
                     })(
                     <Input placeholder="email@email.com" />
@@ -191,7 +215,7 @@ class CreateUser extends Component {
 
                 <FormItem >
                     
-                        <Checkbox onChange={this.onChecked} disabled={this.state.disableCheckBoxAdm}
+                        <Checkbox id='checkAdm' onChange={this.onChecked} disabled={this.state.disableCheckBoxAdm}
                         checked={this.state.adm}
                         >Privilégio de ADM</Checkbox>
                 
@@ -199,14 +223,26 @@ class CreateUser extends Component {
 
                 <FormItem>
 
-                    <Button
+                    {/* <Button
                     type="primary"
                     // htmlType="submit"
                     disabled={hasErrors(getFieldsError())}
                     onClick={() => this.handleSubmit(this.props.history)}
                     >
                     Cadastrar
-                    </Button>
+                    </Button> */}
+                    <Button type="primary" onClick={this.showModal}>Cadastrar</Button>
+                    <Modal
+                    title="Digite Sua Senha"
+                    visible={this.state.visible}
+                    onOk={this.handleOk}
+                    okText='Cadastrar'
+                    okType='primary'
+                    onCancel={this.handleCancel}
+                    cancelText='Cancelar'
+                    >
+                    <Input type='password' id='passwordAdm' />
+                    </Modal>
                     
 
                 </FormItem>
