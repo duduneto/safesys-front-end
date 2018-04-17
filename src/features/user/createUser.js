@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { Form, Icon, Input, Button, DatePicker, Radio, Select, Card, Switch, Checkbox } from 'antd';
+import { Form, Icon, Input, Button, DatePicker, Radio, Select, Card, Switch, Checkbox, message } from 'antd';
 import axios from 'axios';
 import urls from '../../common/urls';
 import { formatDate } from '../contratos/novoContrato/helper/dateHelper'
 import { cadastroSuccess, cadastroFail } from '../contratos/novoContrato/helper/notification';
+import { withRouter } from 'react-router-dom';
 // import { addToken } from './helper/addToken';
 
 // import { setDadosCadastro } from './actions/actionNovoContrato';
@@ -41,8 +42,8 @@ class CreateUser extends Component {
         this.setState({adm: true});
     }
 
-    handleSubmit = (e) => {
-      e.preventDefault();
+    handleSubmit = (history) => {
+      
       this.props.form.validateFields((err, values) => {
         if (!err) {
             
@@ -52,14 +53,17 @@ class CreateUser extends Component {
             
             // values.token = token;
             console.log(values.adm);
-
+            console.log(values)
             axios.post(`${urls.OAPI_URL}/signup`, values)
             .then(resp => {
                 console.log(resp)
-                console.log('Deu Certo')
+                // this.props.form.resetFields();
+                message.success('Usuário Criado com Sucesso')
+                // history.push('/home')
             })
             .catch(err =>{
                 console.log(err)
+                message.error('Algo deu errado')
                 console.log('Deu Errado')
             })
             
@@ -197,9 +201,9 @@ class CreateUser extends Component {
 
                     <Button
                     type="primary"
-                    htmlType="submit"
+                    // htmlType="submit"
                     disabled={hasErrors(getFieldsError())}
-                    
+                    onClick={() => this.handleSubmit(this.props.history)}
                     >
                     Cadastrar
                     </Button>
@@ -217,5 +221,6 @@ class CreateUser extends Component {
 
   const WrappedCreateUser = Form.create()(CreateUser);
   
+  const WrappedCreateUserWithRouter = withRouter(WrappedCreateUser)
 
-  export default WrappedCreateUser
+  export default WrappedCreateUserWithRouter

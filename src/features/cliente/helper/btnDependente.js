@@ -56,7 +56,7 @@ class BtnDependente extends Component{
                 <div>
                     
 
-                    <Button type='dashed' className='btnDependente' onClick={this.handleBtn} disabled={this.props.user.adm} >Dependentes</Button>
+                    <Button type='dashed' className='btnDependente' onClick={this.handleBtn} >Dependentes</Button>
                     
                 </div>
             )
