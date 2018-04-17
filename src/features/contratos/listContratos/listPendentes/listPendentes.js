@@ -32,17 +32,29 @@ class ListPendentes extends Component {
 
 
     componentDidMount(){
-
         const token = localStorage.getItem('token');
-        axios.get(`${urls.API_URL}/contratos?confirm_processo=false&sort=nome`,{headers:{token:token}})
-        .then(resp => {
-            console.log(resp);
-            
-            this.props.atualizaProcessoPendente(resp.data);
-        })
-        .catch(err => {
-            console.log(err)
-        })
+        if(this.props.user.adm === false){
+            axios.get(`${urls.API_URL}/contratos?responsavel_cpf=${this.props.user.cpf}&sort=nome`,{headers:{token:token}})
+            .then(resp => {
+                console.log(resp);
+                
+                this.props.atualizaProcessoPendente(resp.data);
+            })
+            .catch(err => {
+                console.log(err)
+            })
+        }else{
+            axios.get(`${urls.API_URL}/contratos?sort=nome`,{headers:{token:token}})
+            .then(resp => {
+                console.log(resp);
+                
+                this.props.atualizaProcessoPendente(resp.data);
+            })
+            .catch(err => {
+                console.log(err)
+            })
+        }
+        
         
     }
 
@@ -266,7 +278,10 @@ class ListPendentes extends Component {
 
 }
 
-const mapStateToProps = state => ({reduxContratos: state.contratos.contratosPendentes, reduxContratosClone: state.contratos.contratosPendentesClone})
+const mapStateToProps = state => ({reduxContratos: state.contratos.contratosPendentes, 
+    reduxContratosClone: state.contratos.contratosPendentesClone,
+    user: state.user.user
+})
 
 const mapDispatchToProps = dispatch => bindActionCreators({getContratosPendentes, filtraProcesso, limpaPesquisaProcesso, atualizaProcessoPendente}, dispatch)
 export default connect(mapStateToProps,mapDispatchToProps)(ListPendentes)

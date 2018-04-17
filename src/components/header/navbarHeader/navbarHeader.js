@@ -13,6 +13,7 @@ function btnClicked() {
     console.log("Quero Deslogar");
 
     localStorage.removeItem('token');
+    localStorage.removeItem('emailUser');
     window.location.href=`${urls.HOME}`;
 
 }

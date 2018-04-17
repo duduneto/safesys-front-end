@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Layout, Menu, Icon } from 'antd';
 
+import axios from 'axios';
+import urls from '../../common/urls';
+
 import { abreFechaMenu } from '../actions/sideMenuActions';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
@@ -15,7 +18,7 @@ class SideMenu extends Component{
     constructor(props){
         super(props);
 
-        this.state = {resposive:false}
+        this.state = {resposive:false, disableAddUser: true}
 
         this.fechaMenu = this.fechaMenu.bind(this);
         this.onCollapse = this.onCollapse.bind(this);
@@ -45,13 +48,17 @@ class SideMenu extends Component{
     // }
 
     componentDidMount(){
-        // if(window.screen.width < 992){
-        //     this.setState({resposive:true})
-        //     console.log('Responsividade DisparadaAAAAAAAAA')
-        // } else{
-        //     this.setState({resposive:false})
-        //     console.log('Responsividade RetraidaaaaaAAAAAAA')
-        // }
+        let emailUser = localStorage.getItem('emailUser');
+        axios.get(`${urls.OAPI_URL}/usuario?email=${emailUser}`)
+        .then( resp => {
+            
+            if(resp.data[0].adm == true){
+                this.setState({disableAddUser: false})
+            }
+        })
+        .catch( err => {
+            console.log(err)
+        });
     }
 
     render(){
@@ -92,7 +99,7 @@ class SideMenu extends Component{
 
                     
                     <SubMenu key="sub1" title={<span><Icon type="solution" />Contratos</span>}>
-                        <Menu.Item  key="2">
+                        <Menu.Item  key="2" disabled={!this.props.user.adm} >
                             
                             <Icon type="file-add" />
                             <span className="nav-text">Novo Contrato</span>
@@ -106,10 +113,10 @@ class SideMenu extends Component{
                         </Menu.Item>
                     </SubMenu>
 
-                    <Menu.Item key="4">
+                    <Menu.Item key="4" disabled={this.state.disableAddUser} >
                         <Icon type="user" />
-                        <span className="nav-text">Teste</span>
-                        <Link to='/cliente' />
+                        <span className="nav-text">Adicionar Usuário</span>
+                        <Link to='/newUser' />
                     </Menu.Item>
 
                 </Menu>
@@ -121,7 +128,8 @@ class SideMenu extends Component{
 }
 
 const mapStateToProps = state => ({
-    collapse: state.sideMenu.collapse
+    collapse: state.sideMenu.collapse,
+    user: state.user.user
   })
   
   const mapDispatchToProps = dispatch => bindActionCreators({abreFechaMenu}, dispatch)

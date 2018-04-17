@@ -35,7 +35,7 @@ class AddDependente extends Component{
         
             return(
                 <div className='espacamento' >
-                    <Button type='primary' onClick={this.showModal}  > Add </Button>
+                    <Button type='primary' onClick={this.showModal} disabled={!this.props.user.adm} > Add </Button>
                     <Modal
                     id='modalExcluir'
                     visible={this.props.visible}
@@ -53,7 +53,9 @@ class AddDependente extends Component{
     }
 }
 
-const mapStateToProps = state => ({visible: state.modalDependente.visible, naturezaProcesso: state.naturezaProcesso.naturezaProcesso,
+const mapStateToProps = state => ({visible: state.modalDependente.visible, 
+    naturezaProcesso: state.naturezaProcesso.naturezaProcesso,
+    user: state.user.user
 
 })
 

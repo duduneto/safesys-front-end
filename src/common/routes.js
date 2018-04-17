@@ -9,6 +9,8 @@ import FormEdita from '../features/contratos/listContratos/listPendentes/helper/
 import Cliente from '../features/cliente'
 import Dependente from '../features/dependente'
 import EditaDependente from '../features/dependente/editaDependente';
+import CreateUser from '../features/user/createUser';
+
 
 export default props => (
 
@@ -22,6 +24,7 @@ export default props => (
         <Route path='/cliente' component={Cliente} />
         <Route path='/dependente' component={Dependente} />
         <Route path='/editaDependente' component={EditaDependente} />
+        <Route path='/newUser' component={CreateUser} />
         <Redirect from='*' to='/home' />
     
     </div>

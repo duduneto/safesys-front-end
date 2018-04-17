@@ -56,7 +56,7 @@ class BtnDependente extends Component{
                 <div>
                     
 
-                    <Button type='dashed' className='btnDependente' onClick={this.handleBtn} >Dependentes</Button>
+                    <Button type='dashed' className='btnDependente' onClick={this.handleBtn} disabled={this.props.user.adm} >Dependentes</Button>
                     
                 </div>
             )
@@ -71,7 +71,8 @@ class BtnDependente extends Component{
 const BtnDependenteWithRouter = withRouter(BtnDependente);
 
 const mapStateToProps = state => ({
-    dados: state.dadosPerfilCliente.dadosPerfilCliente
+    dados: state.dadosPerfilCliente.dadosPerfilCliente,
+    user: state.user.user
 })
   
   const mapDispatchToProps = dispatch => bindActionCreators({setDadosDependentePerfil}, dispatch)

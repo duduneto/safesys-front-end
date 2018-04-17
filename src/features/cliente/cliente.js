@@ -90,11 +90,16 @@ class Cliente extends Component{
                                 title='Sexo'
                                 description={this.props.dados.sexo}
                             />
-                            <h3>Conteúdo</h3>
+
+                            <List.Item.Meta
+                                title='Responsavel'
+                                description={this.props.dados.responsavel_cpf}
+                            />
+                            
                             <Row center="xs">
                                 <Col xs={8} ><BtnDependente dados={this.props.dados} /></Col>
                                 <Col xs={16} ></Col>
-                                <Col xs={16} ><Button type='default' onClick={this.handleEditar} >Editar</Button></Col>
+                                <Col xs={16} ><Button type='default' onClick={this.handleEditar} disabled={!this.props.user.adm} >Editar</Button></Col>
                             </Row>
 
                             
@@ -108,7 +113,8 @@ class Cliente extends Component{
 const ClienteWithRouter = withRouter(Cliente)
 
 const mapStateToProps = state => ({
-    dados: state.dadosPerfilCliente.dadosPerfilCliente
+    dados: state.dadosPerfilCliente.dadosPerfilCliente,
+    user: state.user.user
 })
   
   const mapDispatchToProps = dispatch => bindActionCreators({}, dispatch)

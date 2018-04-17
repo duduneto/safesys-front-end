@@ -9,6 +9,7 @@ import { connectionFail } from './helper/notification';
 // import PegaFetch from './loginfetch';
 
 // import { reduxForm, Field } from 'redux-form';
+import { setUser } from './actions/userActions';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
       
@@ -16,7 +17,7 @@ import { login } from '../auth/authActions';
 
 const FormItem = Form.Item;
   
-  class Login extends React.Component {
+class Login extends React.Component {
 
     
     constructor(props){
@@ -41,8 +42,8 @@ const FormItem = Form.Item;
         password: passworduser,
       })
         .then( resp => {
-          console.log(resp.data)
           localStorage.setItem('token', resp.data.token);
+          localStorage.setItem('emailUser', emailuser)
           window.location.href=`${urls.HOME}`;
         }).catch( err => {
           console.log(err.headers);
@@ -62,7 +63,7 @@ const FormItem = Form.Item;
 
       this.logaUsuario(emailuser, passworduser);
 
-      console.log(emailuser,passworduser);
+      
       
       return this;        
     }
@@ -124,5 +125,5 @@ const FormItem = Form.Item;
   const LoginForm = Form.create()(Login);
 
   const mapStateToProps = state => ({ auth: state.auth });
-  const mapDispatchToProps = dispatch => bindActionCreators( { login }, dispatch);
+  const mapDispatchToProps = dispatch => bindActionCreators( { login, setUser }, dispatch);
   export default connect(mapStateToProps,mapDispatchToProps)(LoginForm);

@@ -129,7 +129,7 @@ class Dependente extends Component{
                                     <Col xs={2} />
                                 </Row>
                                     
-                                <Button type='default' onClick={() => this.goToEdit(item)} >Editar</Button>
+                                <Button type='default' onClick={() => this.goToEdit(item)} disabled={!this.props.user.adm} >Editar</Button>
                                 </Panel>
                             </Collapse>
                         
@@ -145,7 +145,8 @@ const DependenteWithRouter = withRouter(Dependente)
 
 const mapStateToProps = state => ({
     
-    dadosPerfilDependente : state.dadosPerfilDependente.dadosPerfilDependente
+    dadosPerfilDependente : state.dadosPerfilDependente.dadosPerfilDependente,
+    user: state.user.user
 })
   
   const mapDispatchToProps = dispatch => bindActionCreators({setDadosDependentePerfilEditar}, dispatch)

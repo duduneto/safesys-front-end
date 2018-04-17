@@ -293,6 +293,28 @@ class FormEdita extends Component {
                         )}
                     </FormItem>
                 </Panel>
+
+                <Panel header={<HeaderPanel title='Responsavel:' content={this.props.dados.responsavel_cpf} />} >
+                    <FormItem
+                        label="Responsavel pelo Processo"
+                        >
+                        {getFieldDecorator('responsavel_cpf')(
+                            <Select
+                                showSearch
+                                style={{ width: 200 }}
+                                placeholder="Responsevel"
+                                optionFilterProp="children"
+                                onChange={this.handleResposavelSelected}
+                                // onFocus={handleFocus}
+                                // onBlur={handleBlur}
+                                filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+                            >   
+                                <Option key={this.props.dados.cpf} value={this.props.dados.cpf} >Eu</Option>
+                                {this.props.responsaveis.map( e => <Option value={e.cpf} key={`chave${e.cpf}`} >{e.nome}</Option>)}
+                            </Select>
+                        )}
+                    </FormItem>
+                </Panel>
                 </Collapse>
 
 
@@ -332,7 +354,8 @@ class FormEdita extends Component {
   const WrappedFormEditaWithRouter = withRouter(WrappedFormEdita)
   
   const mapStateToProps = state => ({
-    dados: state.dadosPerfilCliente.dadosPerfilCliente
+    dados: state.dadosPerfilCliente.dadosPerfilCliente,
+    responsaveis: state.responsaveis.responsaveis
 })
   
   const mapDispatchToProps = dispatch => bindActionCreators({}, dispatch)

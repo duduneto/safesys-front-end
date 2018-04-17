@@ -11,8 +11,11 @@ import ModalDependente from '../features/contratos/novoContrato/reducers/modalDe
 import DadosDependente from '../features/contratos/novoContrato/reducers/dadosDependentes';
 import DadosPerfilCliente from '../features/cliente/reducers/reducer'
 import DadosPerfilDependente from '../features/dependente/reducers/reducer'
+import User from '../features/login/reducer/reducer'
+import Responsaveis from '../features/home/reducer/reducer'
 
 const rootReducer = combineReducers({
+    user: User,
     contratos: Contratos,
     sideMenu: SideMenu,
     step: Step,
@@ -21,7 +24,8 @@ const rootReducer = combineReducers({
     modalDependente: ModalDependente,
     dadosDependente: DadosDependente,
     dadosPerfilCliente: DadosPerfilCliente,
-    dadosPerfilDependente: DadosPerfilDependente
+    dadosPerfilDependente: DadosPerfilDependente,
+    responsaveis: Responsaveis
 });
 
 export default rootReducer;

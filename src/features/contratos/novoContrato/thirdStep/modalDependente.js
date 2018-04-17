@@ -41,6 +41,7 @@ class ModalDependente extends Component{
   
               this.props.addDadosDependente(this.props.dadosDependentes,values)
               
+              this.props.form.resetFields();
                      
           
           }

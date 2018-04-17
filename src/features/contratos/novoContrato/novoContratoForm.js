@@ -24,6 +24,16 @@ function hasErrors(fieldsError) {
 
 class HorizontalLoginForm extends Component {
 
+    constructor(props){
+        super(props);
+        this.handleResposavelSelected = this.handleResposavelSelected.bind(this);
+        this.state ={ responsavel_cpf: undefined}
+    }
+
+    handleResposavelSelected(value) {
+        this.setState({responsavel_cpf:value})
+    }
+
     handleChange = (e) => {
         if( e == 'Morte'){
             console.log('Morte Escolhida')
@@ -51,6 +61,7 @@ class HorizontalLoginForm extends Component {
             let data_sinistro = formatDate(values.data_sinistro._d)
             values.data_sinistro = data_sinistro;
             values.data_nasc = data;
+            values.responsavel_cpf = this.state.responsavel_cpf;
             console.log(values);
             // values.token = token;
             // console.log(values);
@@ -220,6 +231,28 @@ class HorizontalLoginForm extends Component {
                 )}
             </FormItem>
 
+            <FormItem
+                label="Responsavel pelo Processo"
+                >
+                {getFieldDecorator('responsavel_cpf', {
+                    rules: [{ required: true, message: 'Escolha um Responsavel' }],
+                })(
+                    <Select
+                        showSearch
+                        style={{ width: 200 }}
+                        placeholder="Responsevel"
+                        optionFilterProp="children"
+                        onChange={this.handleResposavelSelected}
+                        // onFocus={handleFocus}
+                        // onBlur={handleBlur}
+                        filterOption={(input, option) => option.props.children.toLowerCase().indexOf(input.toLowerCase()) >= 0}
+                    >   
+                        <Option key={this.props.user.cpf} value={this.props.user.cpf} >Eu</Option>
+                        {this.props.responsaveis.map( e => <Option value={e.cpf} key={`chave${e.cpf}`} >{e.nome}</Option>)}
+                    </Select>
+                )}
+            </FormItem>
+            
 
             <FormItem>
 
@@ -251,7 +284,9 @@ class HorizontalLoginForm extends Component {
 
   const mapStateToProps = state => ({
     dadosCadastro: state.contratos.dadosCadastroProcesso,
-    numberPage: state.step.numberPage
+    numberPage: state.step.numberPage,
+    responsaveis: state.responsaveis.responsaveis,
+    user: state.user.user
   })
   
   const mapDispatchToProps = dispatch => bindActionCreators({setDadosCadastro, atualizaCurrent}, dispatch)
