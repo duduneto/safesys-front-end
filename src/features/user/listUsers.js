@@ -28,7 +28,7 @@ export default class ListUsers  extends Component {
   render() {
       return(
           <div>
-              <List
+              {/* <List
                   className="demo-loadmore-list"
 
                   itemLayout="horizontal"
@@ -44,7 +44,7 @@ export default class ListUsers  extends Component {
 
                       </List.Item>
                   )}
-              />
+              /> */}
           </div>
       )
   }
