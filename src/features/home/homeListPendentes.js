@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { List, Card, Icon, Avatar } from 'antd';
+import { List, Card, Icon, Avatar, Collapse } from 'antd';
 import { Row, Col } from 'react-flexbox-grid'
 import axios from 'axios';
 import urls from '../../common/urls';
@@ -13,26 +13,9 @@ import { atualizaProcessoPendente } from '../contratos/listContratos/listPendent
 
 // const { Column } = Table;
 
-const data = [
-    {
-      title: 'Title 1',
-    },
-    {
-      title: 'Title 2',
-    },
-    {
-      title: 'Title 3',
-    },
-    {
-      title: 'Title 4',
-    },
-    {
-      title: 'Title 5',
-    }
-    
-  ];
 
-  
+
+const Panel = Collapse.Panel;
 
 class HomeListPendentes extends Component {
 
@@ -67,76 +50,19 @@ class HomeListPendentes extends Component {
         return(
 
 
-            
-                
-                <div>
+            <div>
 
-                    <List
-                        grid={{ gutter: 16, xs: 1, sm: 2}}
-                        
-                    
-                    >
-                        
-                        
+                    <List grid={{ gutter: 16, xs: 1, sm: 2 }}>
                         <List.Item >
-                        <Card1 />
-                            
+                            <Card1 />
                         </List.Item>
-                        
                         <List.Item>
-                            <Card2/>
+                            <Card2 />
                         </List.Item>
                     </List>
-                        
-                    {/* <Row>
-                        <Col xs >
-                            
-                                <Card1/>
-                            
-                        </Col>
-                        <Col xs >
-                        </Col>
-                        
-                    </Row>
-                        <Card2 /> */}
-                    
-                
+
                 </div>
                 
-            
-            
-
-            // <Table dataSource={this.props.reduxContratosClone} scroll={{x : 650}} >
-                    
-            //         <Column
-            //             title="Nome"
-            //             dataIndex="nome"
-            //             key="nome"
-            //         />
-            //         <Column
-            //             title="RG"
-            //             dataIndex="rg"
-            //             key="rg"
-            //         />
-                    
-            //         <Column
-            //         title="CPF"
-            //         dataIndex="cpf"
-            //         key="cpf"
-            //         />
-            //         <Column
-            //         title="Nascimento"
-            //         dataIndex="data_nasc"
-            //         key="data_nasc"
-            //         />
-            //         <Column
-            //         title="Sexo"
-            //         dataIndex="sexo"
-            //         key="sexo"
-            //         />
-                    
-            //     </Table>
-
         )
     }
 

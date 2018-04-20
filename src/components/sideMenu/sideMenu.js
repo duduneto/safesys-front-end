@@ -90,7 +90,7 @@ class SideMenu extends Component{
                     
                     <Menu.Item key="1" >
                                 
-                                <Icon type="user" />
+                                <Icon type="home" />
                                 <span className="nav-text" >Home</span>
                                 <Link to='/home' />
                             
@@ -113,11 +113,19 @@ class SideMenu extends Component{
                         </Menu.Item>
                     </SubMenu>
 
-                    <Menu.Item key="4" disabled={this.state.disableAddUser} >
-                        <Icon type="user" />
-                        <span className="nav-text">Adicionar Usuário</span>
-                        <Link to='/newUser' />
-                    </Menu.Item>
+                    <SubMenu key="sub2" title={<span><Icon type="user" />Usuários</span>}>
+                        <Menu.Item key="4" disabled={this.state.disableAddUser} >
+                            <Icon type="user-add" />
+                            <span className="nav-text">Adicionar Usuário</span>
+                            <Link to='/newUser' />
+                        </Menu.Item>
+
+                        <Menu.Item key="5" disabled={this.state.disableAddUser} >
+                            <Icon type="contacts" />
+                            <span className="nav-text">Usuários</span>
+                            <Link to='/usuarios' />
+                        </Menu.Item>
+                    </SubMenu>
 
                 </Menu>
                 

@@ -105,3 +105,88 @@
   background-color: tomato;
   color: white;
 }
+
+.cardHome{
+  border: gainsboro;
+  border-style: solid;
+  border-width: 1px;
+  margin-right: 0.5em;
+  height: 9em;
+  
+}
+
+@media only screen and (max-width: 600px){
+  .svgIcon{
+    
+    width: 3.5rem;
+    height: 3.5rem;
+  }
+  
+} @media only screen and (min-width: 600px){
+  .svgIcon{
+    
+    width: 3.5rem;
+    height: 3.5rem;
+  }
+}
+
+.check{
+  fill: #66ca3a;
+}
+.clock{
+  fill: rgb(255, 209, 4);
+}
+.times{
+  fill: tomato;
+  
+}
+.titleCard{
+  /* background-color: tomato; */
+    width: 100%;
+    height: 2em;
+    padding-top: 0.25em;
+    margin-left: 3em;
+    margin-left: 0px;
+    text-align: center;
+    font-size: 1.3em;
+    color: white;
+}
+.titleCheck{
+  background-color: #66ca3a;
+}
+.titleClock{
+  background-color: rgb(235, 192, 0);
+}
+.titleTimes{
+  background-color: tomato;
+}
+.iconBox{
+  padding-left: 2em;
+  padding-top: 1em;
+}
+.cardHomeBody::after{
+  content: "";
+    clear: both;
+    display: table;
+}
+.resultBox{
+  padding-left: 7em;
+  padding-top: 1.3em;
+}
+
+.numberResult{
+  font-size: 2.3em;
+  font-family: 'Open Sans', sans-serif;
+  font-weight: bold;
+  
+  
+}
+.number-color-check{
+  color: #478a2b;
+}
+.number-color-clock{
+  color: rgb(206, 168, 2);
+}
+.number-color-times{
+  color: rgb(204, 86, 65);
+}
