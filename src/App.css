@@ -190,3 +190,18 @@
 .number-color-times{
   color: rgb(204, 86, 65);
 }
+#inputPesquisarCPF{
+  margin-bottom: 1em;
+  margin-top: 1em;
+}
+#inputPesquisarNome{
+  margin-bottom: 1em;
+  margin-top: 1em;
+}
+.paddingbottom2em{
+  padding-bottom: 2em;
+}
+.formAddUser{
+  padding: 1em;
+  padding-top: 2em;
+}

@@ -17,7 +17,7 @@ class Home extends Component{
     constructor(props){
         super(props);
         
-        this.state = { names : [] }
+        this.state = { names : [], indenizados: null, processamento: null, negado: null }
         
         // this.tamanhoTela = this.tamanhoTela.bind(this);
     }
@@ -37,8 +37,21 @@ class Home extends Component{
                 axios.get(`${urls.API_URL}/contratos?sort=nome`,{headers:{token:token}})
                 .then(resp => {
                     console.log(resp);
-                    
+                    let arrayIndenizados = [];
+                    let arrayProcessamento = [];
+                    let arrayNegado = [];
+                    resp.data.forEach(element => {
+                        if( element.status == 'Processo Indenizado'){
+                            arrayIndenizados.push('e');
+                        } else if( element.status == 'Processo Negado' || element.status == 'Processo Cancelado' ){
+                            arrayNegado.push('e');
+                        } else {
+                            arrayProcessamento.push('e');
+                        }
+                    })
+                    this.setState({ indenizados: arrayIndenizados.length, processamento: arrayProcessamento.length, negado: arrayNegado.length })
                     this.props.atualizaProcessoPendente(resp.data);
+
                 })
                 .catch(err => {
                     console.log(err)
@@ -63,15 +76,15 @@ class Home extends Component{
         })
 
         
-        axios.get(`${urls.API_URL}/contratos?sort=nome`,{headers:{token:token}})
-        .then(resp => {
-            console.log(resp);
+        // axios.get(`${urls.API_URL}/contratos?sort=nome`,{headers:{token:token}})
+        // .then(resp => {
+        //     console.log(resp);
             
-            this.props.atualizaProcessoPendente(resp.data);
-        })
-        .catch(err => {
-            console.log(err)
-        })
+        //     this.props.atualizaProcessoPendente(resp.data);
+        // })
+        // .catch(err => {
+        //     console.log(err)
+        // })
         let arrayUsuarios = []
         axios.get(`${urls.OAPI_URL}/usuario`)
         .then( resp => {
@@ -120,7 +133,7 @@ class Home extends Component{
                                     </Col>
                                     <Col>
                                         <div className='resultBox' >
-                                            <p className='numberResult number-color-check' >89</p>
+                                            <p className='numberResult number-color-check' >{this.state.indenizados}</p>
                                         </div>
                                     </Col>
                                 </Row>
@@ -144,7 +157,7 @@ class Home extends Component{
                                     </Col>
                                     <Col>
                                         <div className='resultBox' >
-                                            <p className='numberResult number-color-clock' >89</p>
+                                            <p className='numberResult number-color-clock' >{this.state.processamento}</p>
                                         </div>
                                     </Col>
                                 </Row>
@@ -155,7 +168,7 @@ class Home extends Component{
                     <List.Item>
                         <div className='cardHome'>
                             <div className='titleCard titleTimes'>
-                                <p >Negados</p>
+                                <p >Negados/Cancelados</p>
                             </div>
                             <div className='cardHomeBody' >
                                 <Row>
@@ -168,7 +181,7 @@ class Home extends Component{
                                     </Col>
                                     <Col>
                                         <div className='resultBox' >
-                                            <p className='numberResult number-color-times' >89</p>
+                                            <p className='numberResult number-color-times' >{this.state.negado}</p>
                                         </div>
                                     </Col>
                                 </Row>

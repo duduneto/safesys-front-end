@@ -96,16 +96,16 @@ class Cliente extends Component{
                                 description={this.props.dados.responsavel_cpf}
                             />
                             
-                            <Row center="xs">
-                                <Col xs={8} ><BtnDependente dados={this.props.dados} /></Col>
-                                <Col xs={16} ></Col>
-                                <Col xs={16} ><Button type='default' onClick={this.handleEditar} disabled={!this.props.user.adm} >Editar</Button></Col>
-                            </Row>
 
                             
                         </List.Item>
                     )}
                 />
+                            <Row between="xs" className='paddingbottom2em' >
+                                <Col xs={8} ><BtnDependente dados={this.props.dados} /></Col>
+                                <Col xs={16} ></Col>
+                                <Col xs={16} ><Button type='default' onClick={this.handleEditar} disabled={!this.props.user.adm} >Editar</Button></Col>
+                            </Row>
             </div>
         )
     }

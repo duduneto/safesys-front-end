@@ -138,6 +138,7 @@ class ListPendentes extends Component {
                                  style={{ width: 200 }}
                                 placeholder="Pesquisar Por"
                                 onChange={this.handleChange}
+                                className='espacamento'
                             >
                                 <Option value="Nome">Nome</Option>
                                 <Option value="CPF">CPF</Option>
@@ -178,9 +179,10 @@ class ListPendentes extends Component {
                             
                             
                         </Form> */}
-
+                        
                         <Search
                         id='inputPesquisarNome'
+                        
                         disabled={this.state.disableNome}
                         placeholder="Nome do Cliente"
                         onSearch={value => {
@@ -208,9 +210,11 @@ class ListPendentes extends Component {
                         }
                         enterButton
                         />
+                        
 
                         <Search
                         id='inputPesquisarCPF'
+                        
                         disabled={this.state.disableCPF}
                         placeholder="Digite o CPF"
                         onSearch={value => {
@@ -228,7 +232,7 @@ class ListPendentes extends Component {
                         }
                         enterButton
                         />
-                        <Button type='default' onClick={this.limpaPesquisa} >Restaurar</Button>
+                        <Button type='default'  onClick={this.limpaPesquisa} >Restaurar</Button>
                     </Panel>
                 </Collapse>
                 <Table dataSource={this.props.reduxContratosClone} scroll={{x : 750}} >

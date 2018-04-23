@@ -121,7 +121,7 @@ class CreateUser extends Component {
 
 
       return (
-        <div className='espacamento' >
+        <div className='espacamento formAddUser' >
         
             <Form onSubmit={this.handleSubmit}>
 

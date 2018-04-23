@@ -15,13 +15,13 @@ import { atualizaCurrent, habilitaNext } from './actions/stepsActions'
 import { apagaDependentes } from './actions/actionNovoContrato'
 
 const steps = [{
-    title: 'First',
+    title: 'Primeiro',
     content: <FirstStep/>,
   }, {
-    title: 'Second',
+    title: 'Segundo',
     content: <WrappedHorizontalLoginForm/>,
   }, {
-    title: 'Last',
+    title: 'Terceiro',
     content: <ThirdStep/>,
   }];
 
@@ -103,12 +103,12 @@ class NovoContratoSteps extends Component{
                     {
                         this.props.numberPage == 0
                         &&
-                        <Button type="primary" onClick={() => this.next()} >Next</Button>
+                        <Button type="primary" onClick={() => this.next()} >Próximo</Button>
                     }
                     {
                         this.props.numberPage === steps.length - 1
                         &&
-                        <Button type="primary" onClick={() => {this.doneClick()}}>Done</Button>
+                        <Button type="primary" onClick={() => {this.doneClick()}}>Finalizar</Button>
                     }
                     {
                         this.props.numberPage == 2

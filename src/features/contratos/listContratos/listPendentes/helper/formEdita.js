@@ -270,12 +270,21 @@ class FormEdita extends Component {
                         >
                         {getFieldDecorator('status')(
                             <Select placeholder="Selecione O Status" >
+                                <Option value="Processo Sob Analise Corretor" >Processo Sob Análise Corretor</Option>
                                 <Option value="Processo Sob Analise" >Processo Sob Análise</Option>
                                 <Option value="Processo Enviado p/ Seguradora">Processo Enviado p/ Seguradora</Option>
                                 <Option value="Processo Retornou p/ Seguradora">Processo Retornou p/ Seguradora</Option>
                                 <Option value="Processo com Restrições">Processo com Restrições</Option>
                                 <Option value="Processo Indenizado">Processo Indenizado</Option>
-                                <Option value="Processo Negado/Cancelado">Processo Negado/Cancelado</Option>
+                                <Option value="Processo Negado">Processo Negado</Option>
+                                <Option value="Processo Estornou Pgto">Processo Estornou Pgto</Option>
+                                <Option value="Processo Cancelado">Processo Cancelado</Option>
+                                <Option value="Processo Reaberto">Processo Reaberto</Option>
+                                <Option value="Reanalise Mantida">Reanalise Mantida</Option>
+                                <Option value="Processo Suspenso">Processo Suspenso</Option>
+                                <Option value="Processo Transferido">Processo Transferido</Option>
+                                <Option value="Processo Devolvido">Processo Devolvido</Option>
+                                <Option value="Processo Emitido Pgto">Processo Emitido Pgto</Option>
                             </Select>
                         )}
                     </FormItem>
