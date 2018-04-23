@@ -125,7 +125,7 @@ class Card2 extends Component{
     percentNegado(){
         let counter = 0;
         this.props.reduxContratosClone.forEach(element => {
-            if(element.status == 'Processo Negado/Cancelado'){
+            if(element.status == 'Processo Negado'){
                 
                 let resultado =  counter + 1;
                 counter = resultado;
