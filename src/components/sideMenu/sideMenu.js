@@ -123,8 +123,9 @@ class SideMenu extends Component{
                         <Menu.Item key="5" disabled={this.state.disableAddUser} >
                             <Icon type="contacts" />
                             <span className="nav-text">Usuários</span>
-                            <Link to='/usuarios' />
+                            <Link to='/users' />
                         </Menu.Item>
+
                     </SubMenu>
 
                 </Menu>

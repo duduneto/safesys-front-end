@@ -10,7 +10,7 @@ import Cliente from '../features/cliente'
 import Dependente from '../features/dependente'
 import EditaDependente from '../features/dependente/editaDependente';
 import CreateUser from '../features/user/createUser';
-import ListUsers from '../features/user/listUsers';
+import Users from '../features/user/users';
 
 
 export default props => (
@@ -26,7 +26,7 @@ export default props => (
         <Route path='/dependente' component={Dependente} />
         <Route path='/editaDependente' component={EditaDependente} />
         <Route path='/newUser' component={CreateUser} />
-        <Route parh='/usuarios' component={ListUsers} />
+        <Route path='/users' component={Users} />
         <Redirect from='*' to='/home' />
     
     </div>

@@ -57,7 +57,9 @@ class HomeListPendentes extends Component {
                             <Card1 />
                         </List.Item>
                         <List.Item>
+                            
                             <Card2 />
+                            
                         </List.Item>
                     </List>
 

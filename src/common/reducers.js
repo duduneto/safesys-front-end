@@ -9,10 +9,11 @@ import NovoContrato from '../features/contratos/novoContrato/reducers/novoContra
 import NaturezaProcesso from '../features/contratos/novoContrato/reducers/firstStepReducer';
 import ModalDependente from '../features/contratos/novoContrato/reducers/modalDependenteReducer';
 import DadosDependente from '../features/contratos/novoContrato/reducers/dadosDependentes';
-import DadosPerfilCliente from '../features/cliente/reducers/reducer'
-import DadosPerfilDependente from '../features/dependente/reducers/reducer'
-import User from '../features/login/reducer/reducer'
-import Responsaveis from '../features/home/reducer/reducer'
+import DadosPerfilCliente from '../features/cliente/reducers/reducer';
+import DadosPerfilDependente from '../features/dependente/reducers/reducer';
+import User from '../features/login/reducer/reducer';
+import Responsaveis from '../features/home/reducer/reducer';
+import Usuarios from '../features/user/reducers/reducer';
 
 const rootReducer = combineReducers({
     user: User,
@@ -25,7 +26,8 @@ const rootReducer = combineReducers({
     dadosDependente: DadosDependente,
     dadosPerfilCliente: DadosPerfilCliente,
     dadosPerfilDependente: DadosPerfilDependente,
-    responsaveis: Responsaveis
+    responsaveis: Responsaveis,
+    usuarios : Usuarios
 });
 
 export default rootReducer;

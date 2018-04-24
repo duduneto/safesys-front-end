@@ -27,6 +27,8 @@ class HorizontalLoginForm extends Component {
     constructor(props){
         super(props);
         this.handleResposavelSelected = this.handleResposavelSelected.bind(this);
+        this.handleDate = this.handleDate.bind(this);
+        this.handleDateSinistro = this.handleDateSinistro.bind(this);
         this.state ={ responsavel_cpf: undefined}
     }
 
@@ -38,6 +40,62 @@ class HorizontalLoginForm extends Component {
         if( e == 'Morte'){
             console.log('Morte Escolhida')
         }
+    }
+
+    handleDate(e){
+        let v = e.target.value;
+        console.log(e.target.value.length, v);
+        let array = v.split('');
+
+        if(array.length > 10){
+            console.log('Atingiu o Limite');
+            array.splice(10, Number.MAX_VALUE);
+        }else if( array.length < 3 ){
+            console.log('Deixa como está')
+        } else if( array.length >=3 && (array[3] === undefined) && !(array[2] == '/') ){
+            array.splice(2,0,'/');
+        } else if(( array.length >=6 ) && (array[6] === undefined) && !(array[5] == '/')) {
+            array.splice(5,0,'/')
+        }
+
+        // array.splice(2,1);
+        // if(array.length >=2 && array.length <5){
+        //     array.splice(2,0,'/')
+        // } else if( array.length >=5){
+        //     array.splice(2,0,'/');
+        //     array.splice(5,0,'/');
+        // }
+        let value = array.join('');
+        console.log(v, array, value);
+        e.target.value = value;
+    }
+
+    handleDateSinistro(el){
+        let v = el.target.value;
+        console.log(el.target.value.length, v);
+        let array = v.split('');
+
+        if(array.length > 10){
+            console.log('Atingiu o Limite');
+            array.splice(10, Number.MAX_VALUE);
+        }else if( array.length < 3 ){
+            console.log('Deixa como está')
+        } else if( array.length >=3 && (array[3] === undefined) && !(array[2] == '/') ){
+            array.splice(2,0,'/');
+        } else if(( array.length >=6 ) && (array[6] === undefined) && !(array[5] == '/')) {
+            array.splice(5,0,'/')
+        }
+
+        // array.splice(2,1);
+        // if(array.length >=2 && array.length <5){
+        //     array.splice(2,0,'/')
+        // } else if( array.length >=5){
+        //     array.splice(2,0,'/');
+        //     array.splice(5,0,'/');
+        // }
+        let value = array.join('');
+        console.log(v, array, value);
+        el.target.value = value;
     }
 
     next() {
@@ -56,11 +114,11 @@ class HorizontalLoginForm extends Component {
         if (!err) {
 
             const token = localStorage.getItem('token');
-            console.log(values.data_nasc._d);
-            const data = formatDate(values.data_nasc._d);
-            let data_sinistro = formatDate(values.data_sinistro._d)
-            values.data_sinistro = data_sinistro;
-            values.data_nasc = data;
+            // console.log(values.data_nasc._d);
+            // const data = formatDate(values.data_nasc._d);
+            // let data_sinistro = formatDate(values.data_sinistro._d)
+            // values.data_sinistro = data_sinistro;
+            // values.data_nasc = data;
             values.responsavel_cpf = this.state.responsavel_cpf;
             console.log(values);
             // values.token = token;
@@ -107,6 +165,7 @@ class HorizontalLoginForm extends Component {
         const cpfError = isFieldTouched('cpf') && getFieldError('cpf');
         const statusError = isFieldTouched('status') && getFieldError('status');
         const telError = isFieldTouched('tel') && getFieldError('tel');
+        const dataNascError = isFieldTouched('data_nasc') && getFieldError('data_nasc')
         const config = {
             rules: [{ type: 'object', required: true, message: 'Selecione a Data' }],
         };
@@ -121,8 +180,9 @@ class HorizontalLoginForm extends Component {
 
         
             <FormItem
-                validateStatus={nomeError ? 'error' : ''}
-                help={nomeError || ''}>
+                
+                label='Nome Cliente'
+                >
 
                 {getFieldDecorator('nome', {
                     rules: [{ required: true, message: 'Digite o Nome Completo' }],
@@ -134,8 +194,8 @@ class HorizontalLoginForm extends Component {
 
 
             <FormItem
-                validateStatus={rgError ? 'error' : ''}
-                help={rgError || ''}>
+                
+                label='RG'>
 
                 {getFieldDecorator('rg', {
                     rules: [{ required: true, message: 'RG Obrigatório' }],
@@ -146,8 +206,9 @@ class HorizontalLoginForm extends Component {
             </FormItem>
 
             <FormItem
-                validateStatus={cpfError ? 'error' : ''}
-                help={cpfError || ''}>
+                
+                label='CPF'
+                >
 
                 {getFieldDecorator('cpf', {
                     rules: [{ required: true, message: 'CPF Obrigatório' }],
@@ -159,11 +220,17 @@ class HorizontalLoginForm extends Component {
 
 
             <FormItem
-                label="Data do Nascimento"
+                
+                
+                label='Data Nascimento'
                 >
-                {getFieldDecorator('data_nasc', config)(
-                    <DatePicker format="DD-MM-YYYY" />
+
+                {getFieldDecorator('data_nasc', {
+                    rules: [{ required: true, message: 'Data Nascimento' }],
+                })(
+                    <Input id='inputData' onChange={this.handleDate} />
                 )}
+
             </FormItem>
 
 
@@ -181,8 +248,11 @@ class HorizontalLoginForm extends Component {
             <FormItem
                 label="Data do Sinistro"
                 >
-                {getFieldDecorator('data_sinistro', config)(
-                    <DatePicker format="DD-MM-YYYY" />
+                
+                {getFieldDecorator('data_sinistro', {
+                    rules: [{ required: true, message: 'Data Sinistro' }],
+                })(
+                    <Input id='inputDataSinistro' onChange={this.handleDateSinistro} />
                 )}
             </FormItem>
 

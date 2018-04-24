@@ -8,7 +8,7 @@ class Card2 extends Component{
 
     constructor(props){
         super(props);
-        this.percentAnaliseCorretor = this.percentSobAnalise.bind(this);
+        this.percentAnaliseCorretor = this.percentAnaliseCorretor.bind(this);
         this.percentSobAnalise = this.percentSobAnalise.bind(this);
         this.percentEnviadoSeguradora = this.percentEnviadoSeguradora.bind(this);
         this.percentRetornouSeguradora = this.percentRetornouSeguradora.bind(this);

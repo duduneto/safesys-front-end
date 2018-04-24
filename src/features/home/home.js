@@ -189,8 +189,9 @@ class Home extends Component{
                         </div>
                     </List.Item>
                 </List>
-
+                
                 <HomeListPendentes />
+                
 
 
                 {/* <h3 className="AlinhaOTexto" >Confirmados</h3> */}
