@@ -28,6 +28,7 @@ class HorizontalLoginForm extends Component {
         super(props);
         this.handleResposavelSelected = this.handleResposavelSelected.bind(this);
         this.handleDate = this.handleDate.bind(this);
+        this.handleCpfMask = this.handleCpfMask.bind(this);
         this.handleDateSinistro = this.handleDateSinistro.bind(this);
         this.state ={ responsavel_cpf: undefined}
     }
@@ -67,6 +68,28 @@ class HorizontalLoginForm extends Component {
         // }
         let value = array.join('');
         console.log(v, array, value);
+        e.target.value = value;
+    }
+
+    handleCpfMask(e){
+        let v = e.target.value;
+        let array = v.split('');
+        console.log(array);
+
+        if( array.length > 14){
+            console.log('Atingiu o Limite');
+            array.splice(14, Number.MAX_VALUE);
+        }else if( array.length < 4 ){
+            console.log('Deixa como está');
+        } else if( (array.length >= 4) && (array[4] === undefined) && !(array[3] == '.') ){
+            array.splice(3,0,'.');
+        } else if( (array.length >= 8 ) && (array[8] === undefined) && !(array[7] == '.') ){
+            array.splice(7,0,'.');
+        }else if( (array.length >= 12 ) && (array[12] === undefined) && !(array[11] == '-') ){
+            array.splice(11,0,'-');
+        }
+
+        let value = array.join('');
         e.target.value = value;
     }
 
@@ -213,7 +236,7 @@ class HorizontalLoginForm extends Component {
                 {getFieldDecorator('cpf', {
                     rules: [{ required: true, message: 'CPF Obrigatório' }],
                 })(
-                <Input type="text" placeholder="CPF" />
+                <Input type="text" placeholder="CPF" onChange={this.handleCpfMask} />
                 )}
 
             </FormItem>
